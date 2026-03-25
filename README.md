@@ -1,2 +1,2 @@
 # rawlz
-Portfolio. Blog. Other stuff.
+Hii ndio site yangu. Sijui nitaeka nini.
