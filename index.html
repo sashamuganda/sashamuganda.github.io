@@ -1,55 +1,294 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>About Me</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasha Muganda | Designer</title>
     <style>
-  body {
-    max-width: 650px;
-    margin: 40px auto;
-    padding: 0 10px;
-    font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #444;
-  }
-  h1, h2, h3 { line-height: 1.2; }
-</style>
+        /* MINIMALIST RESET & VARIABLES */
+        :root {
+            --bg-color: #fafafa; /* Off-white blends perfectly */
+            --text-main: #333333;
+            --text-light: #777777;
+            --accent-blue: #2352b5; /* Inspired by your reference image */
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+        }
+
+        /* LAYOUT STRUCTURE */
+        .container {
+            display: flex;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            gap: 60px;
+        }
+
+        /* ------------------ LEFT SIDEBAR (STICKY) ------------------ */
+        .sidebar {
+            flex: 0 0 320px; /* Fixed width for the left column */
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Logo / Brand */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--text-main);
+            margin-bottom: 40px;
+        }
+        .brand img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #ddd; /* Placeholder color if image misses */
+        }
+        .brand h1 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Intro Paragraph */
+        .intro-text {
+            color: var(--text-main);
+            font-size: 1rem;
+            margin-bottom: auto; /* Hii ndio inasukuma closing paragraph na footer kwenda chini */
+        }
+
+        /* Closing Mini-paragraph */
+        .closing-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+
+        /* Footer Links */
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        .social-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        .social-links a:hover {
+            opacity: 0.6;
+        }
+
+
+        /* ------------------ RIGHT MAIN CONTENT (SCROLLABLE) ------------------ */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 120px; /* Space between the 4 sections */
+            padding-bottom: 60px;
+        }
+
+        /* Project Section (Mimicking the image) */
+        .project-section {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .project-info {
+            flex: 1;
+        }
+        .project-info .category {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            text-decoration: underline;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .project-info h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--accent-blue);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+        .btn-explore {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .btn-explore:hover {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        .project-image {
+            flex: 1.2;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #eaeaea;
+        }
+        .project-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 1 / 1; /* Makes it perfectly square */
+            object-fit: cover;
+        }
+
+
+        /* ------------------ RESPONSIVE DESIGN (TABLET & MOBILE) ------------------ */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 40px;
+            }
+            .sidebar {
+                position: relative; /* Removes sticky on small screens */
+                top: 0;
+                height: auto;
+                flex: none;
+            }
+            .intro-text {
+                margin-bottom: 40px; /* Gives space before projects */
+            }
+            .project-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .project-image {
+                width: 100%;
+            }
+            .project-info h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Sasha Muganda</h1>
-    <p>I am a designer.</p>
-    <h2>Work in Progress</h2>
-    <h5>26th March 2026</h5>
-    <img src="rawlzy.png" alt="work in progress for 26th March 2026" width="540">
-    <h5>'rawlzy' design log</h5>
-    <p>
-        Nilitumia affinity desktop app kutengeneza design ya kwanza ya 'RAWLZY'. Kitu ilifanya nianze na hii design ilikuwa 
-        tu juu sikuwa na internet hata kama kulikuwa na matokeo zingine enye ilicoincide na hio lack of internet lakini hio 
-        ndio ilikuwa the most relevant. Sikuwa na internet juu satellite dish iliibiwa (mara ya pili kwa span ya wiki mbili 
-        hivi imeibiwa) na nilikuwa nimeongea na kakangu kuhusu vile mtu anafaa kumaliza kitu ameanza kabla kugive up. 
-        Sasa kunatime nilikuwa nimetengeneza CV ya graphics design lakini haikuwa na kitu chochote kusema ukweli. 
-        Nikona na history ya graphics design obviously nilipata skills kadha kadha lakini sijawahi itumia kama my main thing
-        lakini push came to shove juu kuna time nilikuwa nimetoka interview mbaya ya kuenda kukuwa barisa Saudi Arabia 
-        na haikuenda poa. So nikirudi home obvious after event kama hio msee anajiulizanga tu maswali mengi. Swali moja 
-        nilikuwa najiuliza. BTW hio interview ya kuwa barista imagine ilikuwa inafanywa karibu na shule inaspecialize na 
-        baristas. So nikirudi home niajiuliza ni nini mimi najua kufanya. Si ati nini ama nini. Nilijiuliza tu nikona 
-        skills gani sahi kwa hizi miaka 27 nimeishi kwa hii dunia nikona skills gani sahi. Na words mbili zilikuwa zinaring 
-        kwa akili. 'Graphics Design'. So hivo ndio niliend up nikitengeneza hio CV ya graphics design lakini after 
-        kutengeneza hio CV nikaona hata kama kwa akili niko na skills. Hakuna kitu nimewahi tengeneza. So nikalenga hio 
-        story nikaanza kutafuta vitu za ujinga online majob za ujinga tu. Anyway fast forward mpaka sahi ndio nikaamua tu 
-        niingie affinity designer nikaanza tu kushika shika vitu. Kutumia tu knowledge niko nayo ya graphics design na btw 
-        si ati najua vitu mingi. Hata sijui kitu btw. Regardless nilitumia the most basic font nikaanza kufikiria kama 
-        naeza kupanga letters za 'RAWLZY' in an interesting way. Nikakumbuka nilikuwa nimewatch video essay ikiongelea 
-        game inaitwa 'Marathon' na design process walitumia na vile ati colour scheme walichagua kwa hio game ni juu 
-        characters kwa game wanakuanga 3d printed. Na obviously printing inatumianga printing scheme ya 'CMYK' so hio ndio 
-        iliinspire colour scheme nimetumia. Kuna swatches zinakuja in-built kwa app inaitwa 'PANTONE + CMYK'. Na ikiona tu 
-        siku fikiria mbali nilitumia tu hizo rangi zenyewe. Logo shape yenyewe niliangalia tu kama app ikona shapes enye 
-        naeza tumia. Siku tengeneza shape from scratch nilitumia shape nilipata kwa app. Alafu nikacheza cheza tu na hio 
-        shape. Nilipata kwanza shape ya paka. Design ya hio paka ilikuwa inspired na Japanese design so nikaona shape 
-        ingine inakaa kama zile alama wanaekanga kwa character akikasirika so nikapaste kwa hio paka ndio ikae kama 
-        imekasirika ama iko uneasy kiflani. Hio alama yenyewe nikaona inakaa interesting nikaanza kucheza cheza nayo. 
-        Nikaona naeza incoopoerate colours so nikakumbuka kuna ile style ya 60-80s America lakini mostly ilikuwa 60s 
-        America na ile movement inaitwa hippie movement. So hippe movement ilikuwa psychedelic sana. Na graphics design 
-        styles ilikuwa inspired na hippie movement ilikuwa psychedelic pia nikakumbuka hio design walikuwa wanatumia 
-        colours mingi kwa shape moja ndio imeinspire vile nilicheza na hio shape.
-    </p>
+
+    <div class="container">
+        <aside class="sidebar">
+            <a href="index.html" class="brand">
+                <img src="your-profile-pic.jpg" alt="Sasha Muganda">
+                <h1>Sasha Muganda</h1>
+            </a>
+
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="intro-text">
+                <p>Hi, I am a designer. I focus on clean aesthetics, thoughtful branding, and creating things that simply make sense.</p>
+            </div>
+
+            <div class="closing-text">
+                <p>Currently open to new projects and collaborations for 2026.</p>
+            </div>
+
+            <footer class="social-links">
+                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://behance.net/yourprofile" target="_blank">Behance</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+            </footer>
+        </aside>
+
+        <main class="main-content">
+            
+            <section class="project-section">
+                <div class="project-info">
+                    <span class="category">Design</span>
+                    <h2>Yoga studio rebrand</h2>
+                    <a href="#" class="btn-explore">Explore</a>
+                </div>
+                <div class="project-image">
+                    <img src="yoga-placeholder.jpg" alt="Yoga Studio Rebrand">
+                </div>
+            </section>
+
+            <section class="project-section">
+                <div class="project-info">
+                    <span class="category">Illustration</span>
+                    <h2>'RAWLZY' identity</h2>
+                    <a href="#" class="btn-explore">Explore</a>
+                </div>
+                <div class="project-image">
+                    <img src="rawlzy.png" alt="Rawlzy Project">
+                </div>
+            </section>
+
+            <section class="project-section">
+                <div class="project-info">
+                    <span class="category">Web Design</span>
+                    <h2>Minimalist Portfolio</h2>
+                    <a href="#" class="btn-explore">Explore</a>
+                </div>
+                <div class="project-image">
+                    <img src="placeholder3.jpg" alt="Project 3">
+                </div>
+            </section>
+
+            <section class="project-section">
+                <div class="project-info">
+                    <span class="category">Concept</span>
+                    <h2>Project Alpha</h2>
+                    <a href="#" class="btn-explore">Explore</a>
+                </div>
+                <div class="project-image">
+                    <img src="placeholder4.jpg" alt="Project 4">
+                </div>
+            </section>
+
+        </main>
+    </div>
+
 </body>
 </html>
