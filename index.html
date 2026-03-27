@@ -21,14 +21,13 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* No scrolling on landing page */
+            overflow: hidden;
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-stack);
             line-height: 1.6;
         }
 
-        /* FULL-HEIGHT LAYOUT — no overflow */
         .container {
             display: flex;
             width: 100%;
@@ -86,7 +85,7 @@
         .intro-text {
             color: var(--text-main);
             font-size: 0.95rem;
-            flex: 1; /* Takes remaining space, pushes footer down */
+            flex: 1;
         }
 
         .closing-text {
@@ -120,39 +119,34 @@
             height: 100%;
         }
 
-        /* Each grid cell */
         .panel {
             position: relative;
             overflow: hidden;
             border-radius: 6px;
-            background-color: #e8e8e8;
             cursor: pointer;
         }
 
-        /* Thumbnail image fills the entire panel */
         .panel img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease, opacity 0.4s ease;
+            transition: transform 0.5s ease;
         }
 
-        /* Overlay with title + button, revealed on hover */
         .panel-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 20px 22px;
-            opacity: 1;
             transition: background 0.4s ease;
         }
 
         .panel:hover .panel-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
         }
 
         .panel:hover img {
@@ -160,16 +154,16 @@
         }
 
         .panel-category {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.72rem;
-            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.65);
+            font-size: 0.68rem;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .panel-title {
             color: #ffffff;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 400;
             letter-spacing: -0.3px;
             margin-bottom: 14px;
@@ -198,7 +192,7 @@
             background-color: rgba(255,255,255,0.2);
         }
 
-        /* Placeholder background colors when images are missing */
+        /* Fallback background colors when images are missing */
         .panel:nth-child(1) { background-color: #d4dce8; }
         .panel:nth-child(2) { background-color: #d8e0d4; }
         .panel:nth-child(3) { background-color: #e0d8d4; }
@@ -206,28 +200,17 @@
 
         /* ------------------ RESPONSIVE ------------------ */
         @media (max-width: 900px) {
-            html, body {
-                overflow: auto;
-            }
+            html, body { overflow: auto; }
             .container {
                 flex-direction: column;
                 height: auto;
                 padding: 24px 18px;
                 gap: 30px;
             }
-            .sidebar {
-                height: auto;
-            }
-            .intro-text {
-                margin-bottom: 20px;
-            }
-            .grid-panel {
-                height: 85vh;
-                gap: 8px;
-            }
-            .panel-title {
-                font-size: 1rem;
-            }
+            .sidebar { height: auto; }
+            .intro-text { margin-bottom: 20px; }
+            .grid-panel { height: 85vh; gap: 8px; }
+            .panel-title { font-size: 1rem; }
         }
 
         @media (max-width: 480px) {
@@ -235,11 +218,8 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: repeat(4, 1fr);
                 height: auto;
-                gap: 8px;
             }
-            .panel {
-                height: 220px;
-            }
+            .panel { height: 220px; }
         }
     </style>
 </head>
@@ -282,42 +262,42 @@
         <!-- RIGHT: 4-PANEL GRID -->
         <main class="grid-panel">
 
-            <!-- Top Left: Logos -->
+            <!-- Top Left: Brand Identity -->
             <div class="panel">
-                <img src="Basic Principles of Graphic Design.png" alt="Logos thumbnail">
+                <img src="Basic Principles of Graphic Design.png" alt="Brand Identity">
                 <div class="panel-overlay">
-                    <p class="panel-category">Work</p>
-                    <h2 class="panel-title">Logos</h2>
+                    <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
+                    <h2 class="panel-title">Brand Identity</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
             </div>
 
-            <!-- Top Right: Posters -->
+            <!-- Top Right: Print & Documents -->
             <div class="panel">
-                <img src="placeholder-posters.jpg" alt="Posters thumbnail">
+                <img src="placeholder-print.jpg" alt="Print & Documents">
                 <div class="panel-overlay">
-                    <p class="panel-category">Work</p>
-                    <h2 class="panel-title">Posters</h2>
+                    <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
+                    <h2 class="panel-title">Print & Documents</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
             </div>
 
-            <!-- Bottom Left: Branded Items -->
+            <!-- Bottom Left: Social & Digital -->
             <div class="panel">
-                <img src="rawlzy.png" alt="Branded Items thumbnail">
+                <img src="rawlzy.png" alt="Social & Digital">
                 <div class="panel-overlay">
-                    <p class="panel-category">Work</p>
-                    <h2 class="panel-title">Branded Items</h2>
+                    <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
+                    <h2 class="panel-title">Social & Digital</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
             </div>
 
-            <!-- Bottom Right: Social Media -->
+            <!-- Bottom Right: Motion & Web -->
             <div class="panel">
-                <img src="placeholder-social.jpg" alt="Social Media thumbnail">
+                <img src="placeholder-motion.jpg" alt="Motion & Web">
                 <div class="panel-overlay">
-                    <p class="panel-category">Work</p>
-                    <h2 class="panel-title">Social Media</h2>
+                    <p class="panel-category">Landscape Video · Mobile Video · Website</p>
+                    <h2 class="panel-title">Motion & Web</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
             </div>
