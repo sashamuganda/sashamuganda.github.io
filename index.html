@@ -261,3 +261,289 @@
             margin-bottom: 10px;
             color: var(--text-main);
             letter-spacing: -0.5px;
+        }
+
+        .modal-desc-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .modal-gallery img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .modal-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+
+        /* ------------------ RESPONSIVE ------------------ */
+        @media (max-width: 900px) {
+            html, body { overflow: auto; }
+            .container {
+                flex-direction: column;
+                height: auto;
+                padding: 24px 18px;
+                gap: 30px;
+            }
+            .sidebar { height: auto; }
+            .intro-text { margin-bottom: 20px; }
+            .grid-panel { height: 85vh; gap: 8px; }
+            .panel-title { font-size: 1rem; }
+            
+            .modal-content {
+                max-height: 100vh;
+                height: 100%;
+                border-radius: 0;
+            }
+            #modal-body {
+                padding: 30px 20px;
+            }
+            .close-btn {
+                top: 10px;
+                right: 15px;
+            }
+            .modal-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-panel {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: auto;
+            }
+            .panel { height: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <a href="index.html" class="brand">
+                <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                <h1>Sasha Muganda</h1>
+            </a>
+
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="intro-text">
+                <p>
+                    Need a dope logo? A poster that pops? Or maybe you want hoodies and phone covers with unique branding? 
+                    My name is Sasha, and I'm here to make your brand shine. My work isn't just about sketching but about 
+                    creating an identity that makes you unforgettable.
+                </p>
+            </div>
+
+            <div class="closing-text">
+                <p>Currently open to new projects and collaborations for 2026.</p>
+            </div>
+
+            <footer class="social-links">
+                <a href="mailto:richard.sasha116@gmail.com">Email</a>
+                <a href="https://www.behance.net/sasharichard" target="_blank">Behance</a>
+                <a href="https://youtube.com/in/sashamuganda" target="_blank">Youtube</a>
+            </footer>
+        </aside>
+
+        <main class="grid-panel">
+            <div class="panel" data-panel-id="brand">
+                <img src="images/logos/brand identity.png" alt="Brand Identity">
+                <div class="panel-overlay">
+                    <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
+                    <h2 class="panel-title">Brand Identity</h2>
+                    <span class="btn-explore">Explore</span>
+                </div>
+            </div>
+
+            <div class="panel" data-panel-id="print">
+                <img src="images/logos/print and documents.png" alt="Print & Documents">
+                <div class="panel-overlay">
+                    <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
+                    <h2 class="panel-title">Print & Documents</h2>
+                    <span class="btn-explore">Explore</span>
+                </div>
+            </div>
+
+            <div class="panel" data-panel-id="social">
+                <img src="images/logos/social and digital.png" alt="Social & Digital">
+                <div class="panel-overlay">
+                    <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
+                    <h2 class="panel-title">Social & Digital</h2>
+                    <span class="btn-explore">Explore</span>
+                </div>
+            </div>
+
+            <div class="panel" data-panel-id="motion">
+                <img src="images/logos/motion and web.png" alt="Motion & Web">
+                <div class="panel-overlay">
+                    <p class="panel-category">Landscape Video · Mobile Video · Website</p>
+                    <h2 class="panel-title">Motion & Web</h2>
+                    <span class="btn-explore">Explore</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="portfolioModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        const portfolioData = {
+            brand: {
+                title: "Brand Identity",
+                description: "A strong brand is more than just a logo; it's a cohesive visual system. Here's a look at how concepts evolve into polished merchandise, business cards, and vectors.",
+                images: [
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/1.png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
+                ]
+            },
+            print: {
+                title: "Print & Documents",
+                description: "Tangible design that demands attention. From clean, readable presentations to eye-catching flyers and banners.",
+                images: 
+                [
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
+                ]
+            },
+            social: {
+                title: "Social & Digital",
+                description: "Vibrant, pixel-perfect content designed to stop the scroll. Tailored specifically for the nuances of Instagram, LinkedIn, and YouTube.",
+                images: [
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
+                ]
+            },
+            motion: {
+                title: "Motion & Web",
+                description: "Bringing static ideas to life through dynamic movement and clean, user-friendly web layouts.",
+                images: [
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
+                ]
+            }
+        };
+
+        const modal = document.getElementById('portfolioModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const modalBody = document.getElementById('modal-body');
+        const panels = document.querySelectorAll('.panel');
+
+        panels.forEach(panel => {
+            panel.addEventListener('click', () => {
+                const panelId = panel.getAttribute('data-panel-id');
+                const data = portfolioData[panelId];
+
+                if(data) {
+                    const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
+
+                    modalBody.innerHTML = `
+                        <h2 class="modal-title-text">${data.title}</h2>
+                        <p class="modal-desc-text">${data.description}</p>
+                        <div class="modal-gallery">
+                            ${galleryHTML}
+                        </div>
+                    `;
+                    modal.classList.add('show');
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
