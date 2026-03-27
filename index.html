@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sasha Muganda | Designer</title>
     <style>
-        /* MINIMALIST RESET & VARIABLES */
         :root {
-            --bg-color: #fafafa; /* Off-white blends perfectly */
+            --bg-color: #fafafa;
             --text-main: #333333;
             --text-light: #777777;
-            --accent-blue: #2352b5; /* Inspired by your reference image */
+            --accent-blue: #2352b5;
             --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -20,65 +19,63 @@
             padding: 0;
         }
 
-        body {
+        html, body {
+            height: 100%;
+            overflow: hidden; /* No scrolling on landing page */
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-stack);
             line-height: 1.6;
         }
 
-        /* LAYOUT STRUCTURE */
+        /* FULL-HEIGHT LAYOUT — no overflow */
         .container {
             display: flex;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 60px 30px;
-            gap: 60px;
+            width: 100%;
+            height: 100vh;
+            padding: 40px 30px 40px 40px;
+            gap: 50px;
         }
 
-        /* ------------------ LEFT SIDEBAR (STICKY) ------------------ */
+        /* ------------------ LEFT SIDEBAR ------------------ */
         .sidebar {
-            flex: 0 0 320px; /* Fixed width for the left column */
-            position: sticky;
-            top: 60px;
-            height: calc(100vh - 120px);
+            flex: 0 0 280px;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
-        /* Logo / Brand */
         .brand {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             text-decoration: none;
             color: var(--text-main);
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
         .brand img {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             object-fit: cover;
-            background-color: #ddd; /* Placeholder color if image misses */
+            background-color: #ddd;
         }
         .brand h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.4px;
         }
 
-        /* Navigation */
         nav {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 40px;
+            gap: 10px;
+            margin-bottom: 32px;
         }
         nav a {
             text-decoration: none;
             color: var(--text-light);
-            font-size: 1.05rem;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
         nav a:hover, nav a.active {
@@ -86,127 +83,162 @@
             font-weight: 500;
         }
 
-        /* Intro Paragraph */
         .intro-text {
             color: var(--text-main);
-            font-size: 1rem;
-            margin-bottom: auto; /* Hii ndio inasukuma closing paragraph na footer kwenda chini */
+            font-size: 0.95rem;
+            flex: 1; /* Takes remaining space, pushes footer down */
         }
 
-        /* Closing Mini-paragraph */
         .closing-text {
             color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            max-width: 90%;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
         }
 
-        /* Footer Links */
         .social-links {
             display: flex;
-            gap: 15px;
+            gap: 14px;
         }
         .social-links a {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: opacity 0.3s;
         }
         .social-links a:hover {
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
-
-        /* ------------------ RIGHT MAIN CONTENT (SCROLLABLE) ------------------ */
-        .main-content {
+        /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
+        .grid-panel {
             flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+            height: 100%;
+        }
+
+        /* Each grid cell */
+        .panel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            background-color: #e8e8e8;
+            cursor: pointer;
+        }
+
+        /* Thumbnail image fills the entire panel */
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease, opacity 0.4s ease;
+        }
+
+        /* Overlay with title + button, revealed on hover */
+        .panel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
             display: flex;
             flex-direction: column;
-            gap: 120px; /* Space between the 4 sections */
-            padding-bottom: 60px;
+            justify-content: flex-end;
+            padding: 20px 22px;
+            opacity: 1;
+            transition: background 0.4s ease;
         }
 
-        /* Project Section (Mimicking the image) */
-        .project-section {
-            display: flex;
-            gap: 40px;
-            align-items: center;
+        .panel:hover .panel-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
         }
-        
-        .project-info {
-            flex: 1;
+
+        .panel:hover img {
+            transform: scale(1.04);
         }
-        .project-info .category {
-            color: var(--accent-blue);
-            font-size: 0.85rem;
-            text-decoration: underline;
-            margin-bottom: 10px;
-            display: inline-block;
+
+        .panel-category {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
-        .project-info h2 {
-            font-size: 3rem;
-            font-weight: 300;
-            color: var(--accent-blue);
-            line-height: 1.1;
-            margin-bottom: 25px;
-            letter-spacing: -1px;
+
+        .panel-title {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: -0.3px;
+            margin-bottom: 14px;
         }
+
         .btn-explore {
             display: inline-block;
-            padding: 8px 16px;
-            border: 1px solid var(--text-main);
-            color: var(--text-main);
+            padding: 6px 14px;
+            border: 1px solid rgba(255,255,255,0.8);
+            color: #fff;
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
         }
+
+        .panel:hover .btn-explore {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .btn-explore:hover {
-            background-color: var(--text-main);
-            color: var(--bg-color);
+            background-color: rgba(255,255,255,0.2);
         }
 
-        .project-image {
-            flex: 1.2;
-            border-radius: 4px;
-            overflow: hidden;
-            background-color: #eaeaea;
-        }
-        .project-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            aspect-ratio: 1 / 1; /* Makes it perfectly square */
-            object-fit: cover;
-        }
+        /* Placeholder background colors when images are missing */
+        .panel:nth-child(1) { background-color: #d4dce8; }
+        .panel:nth-child(2) { background-color: #d8e0d4; }
+        .panel:nth-child(3) { background-color: #e0d8d4; }
+        .panel:nth-child(4) { background-color: #dcd4e0; }
 
-
-        /* ------------------ RESPONSIVE DESIGN (TABLET & MOBILE) ------------------ */
+        /* ------------------ RESPONSIVE ------------------ */
         @media (max-width: 900px) {
+            html, body {
+                overflow: auto;
+            }
             .container {
                 flex-direction: column;
-                padding: 30px 20px;
-                gap: 40px;
+                height: auto;
+                padding: 24px 18px;
+                gap: 30px;
             }
             .sidebar {
-                position: relative; /* Removes sticky on small screens */
-                top: 0;
                 height: auto;
-                flex: none;
             }
             .intro-text {
-                margin-bottom: 40px; /* Gives space before projects */
+                margin-bottom: 20px;
             }
-            .project-section {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
+            .grid-panel {
+                height: 85vh;
+                gap: 8px;
             }
-            .project-image {
-                width: 100%;
+            .panel-title {
+                font-size: 1rem;
             }
-            .project-info h2 {
-                font-size: 2.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .grid-panel {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: auto;
+                gap: 8px;
+            }
+            .panel {
+                height: 220px;
             }
         }
     </style>
@@ -214,6 +246,8 @@
 <body>
 
     <div class="container">
+
+        <!-- LEFT SIDEBAR -->
         <aside class="sidebar">
             <a href="index.html" class="brand">
                 <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
@@ -229,7 +263,7 @@
             <div class="intro-text">
                 <p>
                     Need a dope logo? A poster that pops? Or maybe you want hoodies and phone covers with unique branding? 
-                    My name is Sasha, and I’m here to make your brand shine. My work isn't just about sketching but about 
+                    My name is Sasha, and I'm here to make your brand shine. My work isn't just about sketching but about 
                     creating an identity that makes you unforgettable.
                 </p>
             </div>
@@ -245,51 +279,48 @@
             </footer>
         </aside>
 
-        <main class="main-content">
-            
-            <section class="project-section">
-                <div class="project-info">
-                    <span class="category">Design</span>
-                    <h2>Basic Principles of Graphic Design</h2>
-                    <a href="#" class="btn-explore">Explore</a>
-                </div>
-                <div class="project-image">
-                    <img src="Basic Principles of Graphic Design.png" alt="Documentation Thumbnail showcasing design">
-                </div>
-            </section>
+        <!-- RIGHT: 4-PANEL GRID -->
+        <main class="grid-panel">
 
-            <section class="project-section">
-                <div class="project-info">
-                    <span class="category">Branding Practice</span>
-                    <h2>'RAWLZY' identity</h2>
+            <!-- Top Left: Logos -->
+            <div class="panel">
+                <img src="Basic Principles of Graphic Design.png" alt="Logos thumbnail">
+                <div class="panel-overlay">
+                    <p class="panel-category">Work</p>
+                    <h2 class="panel-title">Logos</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
-                <div class="project-image">
-                    <img src="rawlzy.png" alt="Rawlzy Project">
-                </div>
-            </section>
+            </div>
 
-            <section class="project-section">
-                <div class="project-info">
-                    <span class="category">Web Design</span>
-                    <h2>Minimalist Portfolio</h2>
+            <!-- Top Right: Posters -->
+            <div class="panel">
+                <img src="placeholder-posters.jpg" alt="Posters thumbnail">
+                <div class="panel-overlay">
+                    <p class="panel-category">Work</p>
+                    <h2 class="panel-title">Posters</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
-                <div class="project-image">
-                    <img src="placeholder3.jpg" alt="Project 3">
-                </div>
-            </section>
+            </div>
 
-            <section class="project-section">
-                <div class="project-info">
-                    <span class="category">Concept</span>
-                    <h2>Project Alpha</h2>
+            <!-- Bottom Left: Branded Items -->
+            <div class="panel">
+                <img src="rawlzy.png" alt="Branded Items thumbnail">
+                <div class="panel-overlay">
+                    <p class="panel-category">Work</p>
+                    <h2 class="panel-title">Branded Items</h2>
                     <a href="#" class="btn-explore">Explore</a>
                 </div>
-                <div class="project-image">
-                    <img src="placeholder4.jpg" alt="Project 4">
+            </div>
+
+            <!-- Bottom Right: Social Media -->
+            <div class="panel">
+                <img src="placeholder-social.jpg" alt="Social Media thumbnail">
+                <div class="panel-overlay">
+                    <p class="panel-category">Work</p>
+                    <h2 class="panel-title">Social Media</h2>
+                    <a href="#" class="btn-explore">Explore</a>
                 </div>
-            </section>
+            </div>
 
         </main>
     </div>
