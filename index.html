@@ -21,7 +21,7 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Prevents background scrolling */
+            overflow: hidden; 
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-stack);
@@ -181,7 +181,7 @@
             opacity: 0;
             transform: translateY(6px);
             transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
-            pointer-events: none; /* Let the whole panel handle the click */
+            pointer-events: none;
         }
 
         .panel:hover .btn-explore {
@@ -189,7 +189,6 @@
             transform: translateY(0);
         }
 
-        /* Fallback background colors when images are missing */
         .panel:nth-child(1) { background-color: #d4dce8; }
         .panel:nth-child(2) { background-color: #d8e0d4; }
         .panel:nth-child(3) { background-color: #e0d8d4; }
@@ -197,7 +196,7 @@
 
         /* ------------------ MODAL GALLERY STYLES ------------------ */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             z-index: 1000;
             inset: 0;
@@ -243,7 +242,7 @@
 
         #modal-body {
             padding: 40px;
-            overflow-y: auto; /* Enables scrolling inside the modal */
+            overflow-y: auto;
         }
 
         .modal-title-text {
@@ -261,23 +260,27 @@
             line-height: 1.6;
         }
 
+        /* UPDATED: Dense, small thumbnail grid */
         .modal-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
         }
 
         .modal-gallery img {
             width: 100%;
-            height: auto;
+            aspect-ratio: 1 / 1; /* Forces all thumbnails to be uniform squares */
             object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
         }
 
         .modal-gallery img:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2;
         }
 
         /* ------------------ RESPONSIVE ------------------ */
@@ -294,7 +297,6 @@
             .grid-panel { height: 85vh; gap: 8px; }
             .panel-title { font-size: 1rem; }
             
-            /* Mobile Modal */
             .modal-content {
                 max-height: 100vh;
                 height: 100%;
@@ -306,6 +308,11 @@
             .close-btn {
                 top: 10px;
                 right: 15px;
+            }
+            .modal-gallery {
+                /* Even smaller grid for mobile phones */
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
+                gap: 8px;
             }
         }
 
@@ -322,7 +329,6 @@
 <body>
 
     <div class="container">
-
         <aside class="sidebar">
             <a href="index.html" class="brand">
                 <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
@@ -355,7 +361,6 @@
         </aside>
 
         <main class="grid-panel">
-
             <div class="panel" data-panel-id="brand">
                 <img src="Basic Principles of Graphic Design.png" alt="Brand Identity">
                 <div class="panel-overlay">
@@ -391,7 +396,6 @@
                     <span class="btn-explore">Explore</span>
                 </div>
             </div>
-
         </main>
     </div>
 
@@ -404,58 +408,58 @@
     </div>
 
     <script>
-        // 1. Define the content for each panel here. 
-        // Swap out the image files and descriptions with your actual portfolio pieces.
+        // UPDATED: Filled the arrays with multiple items to simulate a large thumbnail grid
         const portfolioData = {
             brand: {
                 title: "Brand Identity",
-                description: "A strong brand is more than just a logo; it's a cohesive visual system. Here's a look at how concepts evolve from rough sketches into polished merchandise, business cards, and scalable vector graphics.",
+                description: "A strong brand is more than just a logo; it's a cohesive visual system. Here's a look at how concepts evolve into polished merchandise, business cards, and vectors.",
                 images: [
-                    "Basic Principles of Graphic Design.png", 
-                    "rawlzy.png"
+                    "Basic Principles of Graphic Design.png", "rawlzy.png", "Sasha zoomed in.jpeg",
+                    "Basic Principles of Graphic Design.png", "rawlzy.png", "Sasha zoomed in.jpeg",
+                    "Basic Principles of Graphic Design.png", "rawlzy.png", "Sasha zoomed in.jpeg",
+                    "Basic Principles of Graphic Design.png", "rawlzy.png", "Sasha zoomed in.jpeg"
                 ]
             },
             print: {
                 title: "Print & Documents",
                 description: "Tangible design that demands attention. From clean, readable presentations to eye-catching flyers and banners.",
                 images: [
-                    "placeholder-print.jpg"
+                    "Sasha zoomed in.jpeg", "Basic Principles of Graphic Design.png", "rawlzy.png",
+                    "Sasha zoomed in.jpeg", "Basic Principles of Graphic Design.png", "rawlzy.png",
+                    "Sasha zoomed in.jpeg", "Basic Principles of Graphic Design.png"
                 ]
             },
             social: {
                 title: "Social & Digital",
                 description: "Vibrant, pixel-perfect content designed to stop the scroll. Tailored specifically for the nuances of Instagram, LinkedIn, and YouTube.",
                 images: [
-                    "rawlzy.png" 
+                    "rawlzy.png", "rawlzy.png", "rawlzy.png", "rawlzy.png",
+                    "rawlzy.png", "rawlzy.png", "rawlzy.png", "rawlzy.png"
                 ]
             },
             motion: {
                 title: "Motion & Web",
                 description: "Bringing static ideas to life through dynamic movement and clean, user-friendly web layouts.",
                 images: [
-                    "placeholder-motion.jpg"
+                    "Basic Principles of Graphic Design.png", "Basic Principles of Graphic Design.png",
+                    "Basic Principles of Graphic Design.png", "Basic Principles of Graphic Design.png"
                 ]
             }
         };
 
-        // 2. Select elements
         const modal = document.getElementById('portfolioModal');
         const closeBtn = document.querySelector('.close-btn');
         const modalBody = document.getElementById('modal-body');
         const panels = document.querySelectorAll('.panel');
 
-        // 3. Add click event to all panels
         panels.forEach(panel => {
             panel.addEventListener('click', () => {
-                // Find out which panel was clicked via the data attribute
                 const panelId = panel.getAttribute('data-panel-id');
                 const data = portfolioData[panelId];
 
                 if(data) {
-                    // Create the image tags dynamically
                     const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
 
-                    // Inject the content into the modal body
                     modalBody.innerHTML = `
                         <h2 class="modal-title-text">${data.title}</h2>
                         <p class="modal-desc-text">${data.description}</p>
@@ -463,24 +467,20 @@
                             ${galleryHTML}
                         </div>
                     `;
-                    // Show the modal
                     modal.classList.add('show');
                 }
             });
         });
 
-        // 4. Close the modal when 'X' is clicked
         closeBtn.addEventListener('click', () => {
             modal.classList.remove('show');
         });
 
-        // 5. Close the modal if the user clicks outside the white content box
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('show');
             }
         });
     </script>
-
 </body>
 </html>
