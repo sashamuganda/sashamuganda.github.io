@@ -142,6 +142,12 @@
             filter: brightness(0.7) saturate(1); 
         }
 
+        .panel:focus-visible {
+            outline: 3px solid var(--accent-blue);
+            outline-offset: 4px;
+            z-index: 10;
+        }
+
         /* UPDATED: Gradient overlay now covers the entire image with a dark wash */
         .panel-overlay {
             position: absolute;
@@ -249,6 +255,12 @@
 
         .close-btn:hover {
             color: var(--text-main);
+        }
+
+        .close-btn:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         #modal-body {
@@ -370,7 +382,7 @@
         </aside>
 
         <main class="grid-panel">
-            <div class="panel" data-panel-id="brand">
+            <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
                 <img src="images/logos/brand identity.png" alt="Brand Identity">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
@@ -379,7 +391,7 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="print">
+            <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
                 <img src="images/logos/print and documents.png" alt="Print & Documents">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
@@ -388,7 +400,7 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="social">
+            <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
                 <img src="images/logos/social and digital.png" alt="Social & Digital">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
@@ -397,7 +409,7 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="motion">
+            <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
                 <img src="images/logos/motion and web.png" alt="Motion & Web">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
@@ -408,9 +420,9 @@
         </main>
     </div>
 
-    <div id="portfolioModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
+    <div id="portfolioModal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-content" aria-labelledby="modal-title">
+            <span class="close-btn" role="button" tabindex="0" aria-label="Close modal">&times;</span>
             <div id="modal-body">
                 </div>
         </div>
@@ -518,28 +530,48 @@
         const modalBody = document.getElementById('modal-body');
         const panels = document.querySelectorAll('.panel');
 
+        function openModal(panelId) {
+            const data = portfolioData[panelId];
+            if(data) {
+                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
+                modalBody.innerHTML = `
+                    <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
+                    <p class="modal-desc-text">${data.description}</p>
+                    <div class="modal-gallery">
+                        ${galleryHTML}
+                    </div>
+                `;
+                modal.classList.add('show');
+            }
+        }
+
         panels.forEach(panel => {
-            panel.addEventListener('click', () => {
-                const panelId = panel.getAttribute('data-panel-id');
-                const data = portfolioData[panelId];
-
-                if(data) {
-                    const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
-
-                    modalBody.innerHTML = `
-                        <h2 class="modal-title-text">${data.title}</h2>
-                        <p class="modal-desc-text">${data.description}</p>
-                        <div class="modal-gallery">
-                            ${galleryHTML}
-                        </div>
-                    `;
-                    modal.classList.add('show');
+            const panelId = panel.getAttribute('data-panel-id');
+            panel.addEventListener('click', () => openModal(panelId));
+            panel.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal(panelId);
                 }
             });
         });
 
-        closeBtn.addEventListener('click', () => {
+        function closeModal() {
             modal.classList.remove('show');
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                closeModal();
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
         });
 
         window.addEventListener('click', (e) => {
