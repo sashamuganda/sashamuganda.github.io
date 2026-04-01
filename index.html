@@ -109,6 +109,12 @@
             opacity: 0.5;
         }
 
+        nav a:focus-visible, .social-links a:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
         /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
         .grid-panel {
             flex: 1;
@@ -352,7 +358,7 @@
     <div class="container">
         <aside class="sidebar">
             <a href="index.html" class="brand">
-                <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                <img src="Sasha zoomed in.jpeg" alt="">
                 <h1>Sasha Muganda</h1>
             </a>
 
@@ -383,7 +389,7 @@
 
         <main class="grid-panel">
             <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
-                <img src="images/logos/brand identity.png" alt="Brand Identity">
+                <img src="images/logos/brand identity.png" alt="Brand Identity" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                     <h2 class="panel-title">Brand Identity</h2>
@@ -392,7 +398,7 @@
             </div>
 
             <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
-                <img src="images/logos/print and documents.png" alt="Print & Documents">
+                <img src="images/logos/print and documents.png" alt="Print & Documents" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                     <h2 class="panel-title">Print & Documents</h2>
@@ -401,7 +407,7 @@
             </div>
 
             <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
-                <img src="images/logos/social and digital.png" alt="Social & Digital">
+                <img src="images/logos/social and digital.png" alt="Social & Digital" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                     <h2 class="panel-title">Social & Digital</h2>
@@ -410,7 +416,7 @@
             </div>
 
             <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
-                <img src="images/logos/motion and web.png" alt="Motion & Web">
+                <img src="images/logos/motion and web.png" alt="Motion & Web" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                     <h2 class="panel-title">Motion & Web</h2>
@@ -529,6 +535,8 @@
         const closeBtn = document.querySelector('.close-btn');
         const modalBody = document.getElementById('modal-body');
         const panels = document.querySelectorAll('.panel');
+        let lastFocusedElement;
+        let currentPanelId;
 
         function openModal(panelId) {
             const data = portfolioData[panelId];
@@ -539,6 +547,9 @@
                 }
 
                 // Create title
+                // Clear previous content safely
+                modalBody.textContent = '';
+
                 const title = document.createElement('h2');
                 title.id = 'modal-title';
                 title.className = 'modal-title-text';
@@ -552,6 +563,11 @@
                 modalBody.appendChild(description);
 
                 // Create gallery
+
+                const desc = document.createElement('p');
+                desc.className = 'modal-desc-text';
+                desc.textContent = data.description;
+
                 const gallery = document.createElement('div');
                 gallery.className = 'modal-gallery';
 
@@ -563,7 +579,30 @@
                 });
 
                 modalBody.appendChild(gallery);
+                    img.loading = 'lazy';
+                    gallery.appendChild(img);
+                });
+
+                modalBody.appendChild(title);
+                modalBody.appendChild(desc);
+                modalBody.appendChild(gallery);
+
+                if (!modal.classList.contains('show')) {
+                    lastFocusedElement = document.activeElement;
+                }
+                currentPanelId = panelId;
+                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
+                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
+                modalBody.innerHTML = `
+                    <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
+                    <p class="modal-desc-text">${data.description}</p>
+                    <div class="modal-gallery">
+                        ${galleryHTML}
+                    </div>
+                `;
                 modal.classList.add('show');
+                modalBody.scrollTop = 0;
+                closeBtn.focus();
             }
         }
 
@@ -580,6 +619,9 @@
 
         function closeModal() {
             modal.classList.remove('show');
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
 
         closeBtn.addEventListener('click', closeModal);
@@ -591,14 +633,25 @@
         });
 
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
+            if (!modal.classList.contains('show')) return;
+
+            if (e.key === 'Escape') {
                 closeModal();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const keys = Object.keys(portfolioData);
+                let currentIndex = keys.indexOf(currentPanelId);
+                if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % keys.length;
+                } else {
+                    currentIndex = (currentIndex - 1 + keys.length) % keys.length;
+                }
+                openModal(keys[currentIndex]);
             }
         });
 
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
-                modal.classList.remove('show');
+                closeModal();
             }
         });
     </script>
