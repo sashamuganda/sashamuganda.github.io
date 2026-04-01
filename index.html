@@ -383,7 +383,7 @@
 
         <main class="grid-panel">
             <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
-                <img src="images/logos/brand identity.png" alt="Brand Identity">
+                <img src="images/logos/brand identity.png" alt="Brand Identity" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                     <h2 class="panel-title">Brand Identity</h2>
@@ -392,7 +392,7 @@
             </div>
 
             <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
-                <img src="images/logos/print and documents.png" alt="Print & Documents">
+                <img src="images/logos/print and documents.png" alt="Print & Documents" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                     <h2 class="panel-title">Print & Documents</h2>
@@ -401,7 +401,7 @@
             </div>
 
             <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
-                <img src="images/logos/social and digital.png" alt="Social & Digital">
+                <img src="images/logos/social and digital.png" alt="Social & Digital" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                     <h2 class="panel-title">Social & Digital</h2>
@@ -410,7 +410,7 @@
             </div>
 
             <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
-                <img src="images/logos/motion and web.png" alt="Motion & Web">
+                <img src="images/logos/motion and web.png" alt="Motion & Web" loading="lazy">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                     <h2 class="panel-title">Motion & Web</h2>
@@ -533,7 +533,7 @@
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if(data) {
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
+                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
                 modalBody.innerHTML = `
                     <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
                     <p class="modal-desc-text">${data.description}</p>
