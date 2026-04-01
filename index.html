@@ -541,6 +541,33 @@
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if(data) {
+                // Clear previous content safely
+                modalBody.textContent = '';
+
+                const title = document.createElement('h2');
+                title.id = 'modal-title';
+                title.className = 'modal-title-text';
+                title.textContent = data.title;
+
+                const desc = document.createElement('p');
+                desc.className = 'modal-desc-text';
+                desc.textContent = data.description;
+
+                const gallery = document.createElement('div');
+                gallery.className = 'modal-gallery';
+
+                data.images.forEach(imgSrc => {
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    img.alt = `${data.title} Example`;
+                    img.loading = 'lazy';
+                    gallery.appendChild(img);
+                });
+
+                modalBody.appendChild(title);
+                modalBody.appendChild(desc);
+                modalBody.appendChild(gallery);
+
                 if (!modal.classList.contains('show')) {
                     lastFocusedElement = document.activeElement;
                 }
