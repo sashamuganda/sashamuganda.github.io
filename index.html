@@ -109,6 +109,12 @@
             opacity: 0.5;
         }
 
+        nav a:focus-visible, .social-links a:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
         /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
         .grid-panel {
             flex: 1;
@@ -352,7 +358,7 @@
     <div class="container">
         <aside class="sidebar">
             <a href="index.html" class="brand">
-                <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                <img src="Sasha zoomed in.jpeg" alt="">
                 <h1>Sasha Muganda</h1>
             </a>
 
@@ -529,10 +535,17 @@
         const closeBtn = document.querySelector('.close-btn');
         const modalBody = document.getElementById('modal-body');
         const panels = document.querySelectorAll('.panel');
+        let lastFocusedElement;
+        let currentPanelId;
 
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if(data) {
+                if (!modal.classList.contains('show')) {
+                    lastFocusedElement = document.activeElement;
+                }
+                currentPanelId = panelId;
+                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
                 const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
                 modalBody.innerHTML = `
                     <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
@@ -542,6 +555,8 @@
                     </div>
                 `;
                 modal.classList.add('show');
+                modalBody.scrollTop = 0;
+                closeBtn.focus();
             }
         }
 
@@ -558,6 +573,9 @@
 
         function closeModal() {
             modal.classList.remove('show');
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
 
         closeBtn.addEventListener('click', closeModal);
@@ -569,14 +587,25 @@
         });
 
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
+            if (!modal.classList.contains('show')) return;
+
+            if (e.key === 'Escape') {
                 closeModal();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const keys = Object.keys(portfolioData);
+                let currentIndex = keys.indexOf(currentPanelId);
+                if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % keys.length;
+                } else {
+                    currentIndex = (currentIndex - 1 + keys.length) % keys.length;
+                }
+                openModal(keys[currentIndex]);
             }
         });
 
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
-                modal.classList.remove('show');
+                closeModal();
             }
         });
     </script>
