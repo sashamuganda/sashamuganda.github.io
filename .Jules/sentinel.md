@@ -16,3 +16,8 @@
 **Vulnerability:** External links using `target="_blank"` were missing `rel="noopener noreferrer"`.
 **Learning:** This is a classic security risk where a newly opened page in a different domain can control the original window via `window.opener`.
 **Prevention:** Always include `rel="noopener noreferrer"` when using `target="_blank"` for external links to ensure cross-origin isolation.
+
+## 2026-04-02 - [Refactoring openModal for Security and Robustness]
+**Vulnerability:** Residual use of `innerHTML` in `openModal` despite previous security notes, combined with highly redundant and syntactically messy code.
+**Learning:** Security fixes often require thorough refactoring of the affected logic to be truly effective and maintainable. Partial or messy fixes can leave vulnerabilities behind or introduce new ones.
+**Prevention:** Always prefer safe DOM APIs (`createElement`, `textContent`) over `innerHTML`. Implement defense in depth by adding a Content Security Policy (CSP).
