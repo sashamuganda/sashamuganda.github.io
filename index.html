@@ -457,7 +457,6 @@
                     "images/logos/get home sweatshirt.png",
                     "images/logos/movie logo.png",
                     "images/logos/fashion designer business card (1).png",
-                    "images/logos/thank you for your order.png",
                     "images/logos/hi im everything.png",
                     "images/logos/astronaut hoodie.png"                    
                 ]
@@ -541,65 +540,48 @@
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if(data) {
-                // Clear existing content safely
-                while (modalBody.firstChild) {
-                    modalBody.removeChild(modalBody.firstChild);
-                }
-
-                // Create title
-                // Clear previous content safely
+                // Bolt: Refactored to use safe DOM manipulation and optimized image loading.
+                // This avoids innerHTML for better security and performance.
                 modalBody.textContent = '';
 
                 const title = document.createElement('h2');
                 title.id = 'modal-title';
                 title.className = 'modal-title-text';
                 title.textContent = data.title;
-                modalBody.appendChild(title);
 
-                // Create description
                 const description = document.createElement('p');
                 description.className = 'modal-desc-text';
                 description.textContent = data.description;
-                modalBody.appendChild(description);
-
-                // Create gallery
-
-                const desc = document.createElement('p');
-                desc.className = 'modal-desc-text';
-                desc.textContent = data.description;
 
                 const gallery = document.createElement('div');
                 gallery.className = 'modal-gallery';
 
-                data.images.forEach(imgSrc => {
+                data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
                     img.src = imgSrc;
                     img.alt = `${data.title} Example`;
-                    gallery.appendChild(img);
-                });
 
-                modalBody.appendChild(gallery);
+                    // Bolt: Performance Optimizations
+                    // 1. loading="lazy": Prevents loading off-screen images until needed.
+                    // 2. decoding="async": Offloads image decoding from the main thread to prevent jank.
+                    // 3. fetchpriority="high": Prioritizes the first 4 images to improve LCP.
                     img.loading = 'lazy';
+                    img.decoding = 'async';
+                    if (index < 4) {
+                        img.fetchPriority = 'high';
+                    }
+
                     gallery.appendChild(img);
                 });
 
                 modalBody.appendChild(title);
-                modalBody.appendChild(desc);
+                modalBody.appendChild(description);
                 modalBody.appendChild(gallery);
 
                 if (!modal.classList.contains('show')) {
                     lastFocusedElement = document.activeElement;
                 }
                 currentPanelId = panelId;
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
-                modalBody.innerHTML = `
-                    <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
-                    <p class="modal-desc-text">${data.description}</p>
-                    <div class="modal-gallery">
-                        ${galleryHTML}
-                    </div>
-                `;
                 modal.classList.add('show');
                 modalBody.scrollTop = 0;
                 closeBtn.focus();
