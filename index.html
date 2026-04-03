@@ -358,12 +358,12 @@
     <div class="container">
         <aside class="sidebar">
             <a href="index.html" class="brand">
-                <img src="Sasha zoomed in.jpeg" alt="">
+                <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda - Portfolio Home">
                 <h1>Sasha Muganda</h1>
             </a>
 
             <nav>
-                <a href="index.html" class="active">Home</a>
+                <a href="index.html" class="active" aria-current="page">Home</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
@@ -541,65 +541,40 @@
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if(data) {
-                // Clear existing content safely
-                while (modalBody.firstChild) {
-                    modalBody.removeChild(modalBody.firstChild);
-                }
-
-                // Create title
-                // Clear previous content safely
                 modalBody.textContent = '';
 
                 const title = document.createElement('h2');
                 title.id = 'modal-title';
                 title.className = 'modal-title-text';
                 title.textContent = data.title;
-                modalBody.appendChild(title);
 
-                // Create description
                 const description = document.createElement('p');
                 description.className = 'modal-desc-text';
                 description.textContent = data.description;
-                modalBody.appendChild(description);
-
-                // Create gallery
-
-                const desc = document.createElement('p');
-                desc.className = 'modal-desc-text';
-                desc.textContent = data.description;
 
                 const gallery = document.createElement('div');
                 gallery.className = 'modal-gallery';
 
-                data.images.forEach(imgSrc => {
+                data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
                     img.src = imgSrc;
-                    img.alt = `${data.title} Example`;
-                    gallery.appendChild(img);
-                });
-
-                modalBody.appendChild(gallery);
-                    img.loading = 'lazy';
+                    img.alt = `${data.title} Example ${index + 1}`;
+                    if (index < 4) {
+                        img.setAttribute('fetchpriority', 'high');
+                    } else {
+                        img.loading = 'lazy';
+                    }
                     gallery.appendChild(img);
                 });
 
                 modalBody.appendChild(title);
-                modalBody.appendChild(desc);
+                modalBody.appendChild(description);
                 modalBody.appendChild(gallery);
 
                 if (!modal.classList.contains('show')) {
                     lastFocusedElement = document.activeElement;
                 }
                 currentPanelId = panelId;
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
-                modalBody.innerHTML = `
-                    <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
-                    <p class="modal-desc-text">${data.description}</p>
-                    <div class="modal-gallery">
-                        ${galleryHTML}
-                    </div>
-                `;
                 modal.classList.add('show');
                 modalBody.scrollTop = 0;
                 closeBtn.focus();
@@ -637,6 +612,22 @@
 
             if (e.key === 'Escape') {
                 closeModal();
+            } else if (e.key === 'Tab') {
+                const focusableElements = modal.querySelectorAll('.close-btn');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                 const keys = Object.keys(portfolioData);
                 let currentIndex = keys.indexOf(currentPanelId);
