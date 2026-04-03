@@ -389,7 +389,8 @@
 
         <main class="grid-panel">
             <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
-                <img src="images/logos/brand identity.png" alt="Brand Identity" loading="lazy">
+                <!-- Priority image for Largest Contentful Paint (LCP) -->
+                <img src="images/logos/brand identity.png" alt="Brand Identity" fetchpriority="high" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                     <h2 class="panel-title">Brand Identity</h2>
@@ -398,7 +399,7 @@
             </div>
 
             <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
-                <img src="images/logos/print and documents.png" alt="Print & Documents" loading="lazy">
+                <img src="images/logos/print and documents.png" alt="Print & Documents" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                     <h2 class="panel-title">Print & Documents</h2>
@@ -407,7 +408,7 @@
             </div>
 
             <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
-                <img src="images/logos/social and digital.png" alt="Social & Digital" loading="lazy">
+                <img src="images/logos/social and digital.png" alt="Social & Digital" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                     <h2 class="panel-title">Social & Digital</h2>
@@ -416,7 +417,7 @@
             </div>
 
             <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
-                <img src="images/logos/motion and web.png" alt="Motion & Web" loading="lazy">
+                <img src="images/logos/motion and web.png" alt="Motion & Web" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                     <h2 class="panel-title">Motion & Web</h2>
@@ -538,72 +539,65 @@
         let lastFocusedElement;
         let currentPanelId;
 
+        /**
+         * Optimizes modal rendering by using DocumentFragment to batch DOM updates
+         * and implementing an intelligent image loading strategy.
+         */
         function openModal(panelId) {
             const data = portfolioData[panelId];
-            if(data) {
-                // Clear existing content safely
-                while (modalBody.firstChild) {
-                    modalBody.removeChild(modalBody.firstChild);
-                }
+            if (!data) return;
 
-                // Create title
-                // Clear previous content safely
-                modalBody.textContent = '';
+            // Use DocumentFragment to batch DOM constructions off-screen (improves performance)
+            const fragment = document.createDocumentFragment();
 
-                const title = document.createElement('h2');
-                title.id = 'modal-title';
-                title.className = 'modal-title-text';
-                title.textContent = data.title;
-                modalBody.appendChild(title);
+            // Create title
+            const title = document.createElement('h2');
+            title.id = 'modal-title';
+            title.className = 'modal-title-text';
+            title.textContent = data.title;
+            fragment.appendChild(title);
 
-                // Create description
-                const description = document.createElement('p');
-                description.className = 'modal-desc-text';
-                description.textContent = data.description;
-                modalBody.appendChild(description);
+            // Create description
+            const description = document.createElement('p');
+            description.className = 'modal-desc-text';
+            description.textContent = data.description;
+            fragment.appendChild(description);
 
-                // Create gallery
+            // Create gallery
+            const gallery = document.createElement('div');
+            gallery.className = 'modal-gallery';
 
-                const desc = document.createElement('p');
-                desc.className = 'modal-desc-text';
-                desc.textContent = data.description;
+            data.images.forEach((imgSrc, index) => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `${data.title} Example`;
+                img.decoding = 'async'; // Prevent main-thread blocking during decoding
 
-                const gallery = document.createElement('div');
-                gallery.className = 'modal-gallery';
-
-                data.images.forEach(imgSrc => {
-                    const img = document.createElement('img');
-                    img.src = imgSrc;
-                    img.alt = `${data.title} Example`;
-                    gallery.appendChild(img);
-                });
-
-                modalBody.appendChild(gallery);
+                // Performance strategy: Eagerly load the first 4 images (likely in viewport)
+                // and lazily load the rest.
+                if (index < 4) {
+                    img.loading = 'eager';
+                    img.fetchPriority = 'high';
+                } else {
                     img.loading = 'lazy';
-                    gallery.appendChild(img);
-                });
-
-                modalBody.appendChild(title);
-                modalBody.appendChild(desc);
-                modalBody.appendChild(gallery);
-
-                if (!modal.classList.contains('show')) {
-                    lastFocusedElement = document.activeElement;
                 }
-                currentPanelId = panelId;
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example">`).join('');
-                const galleryHTML = data.images.map(img => `<img src="${img}" alt="${data.title} Example" loading="lazy">`).join('');
-                modalBody.innerHTML = `
-                    <h2 id="modal-title" class="modal-title-text">${data.title}</h2>
-                    <p class="modal-desc-text">${data.description}</p>
-                    <div class="modal-gallery">
-                        ${galleryHTML}
-                    </div>
-                `;
-                modal.classList.add('show');
-                modalBody.scrollTop = 0;
-                closeBtn.focus();
+
+                gallery.appendChild(img);
+            });
+
+            fragment.appendChild(gallery);
+
+            // Clear modal body and perform a single DOM injection
+            modalBody.textContent = '';
+            modalBody.appendChild(fragment);
+
+            if (!modal.classList.contains('show')) {
+                lastFocusedElement = document.activeElement;
             }
+            currentPanelId = panelId;
+            modal.classList.add('show');
+            modalBody.scrollTop = 0;
+            closeBtn.focus();
         }
 
         panels.forEach(panel => {
