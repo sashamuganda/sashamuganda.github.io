@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
     <title>Sasha Muganda | Designer</title>
     <style>
         :root {
@@ -311,6 +312,26 @@
             z-index: 2;
         }
 
+        .modal-nav-hint {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-nav-hint kbd {
+            background: #eee;
+            border-radius: 3px;
+            padding: 1px 5px;
+            font-family: inherit;
+            font-size: 0.75rem;
+            border: 1px solid #ccc;
+        }
+
         /* ------------------ RESPONSIVE ------------------ */
         @media (max-width: 900px) {
             html, body { overflow: auto; }
@@ -363,7 +384,7 @@
             </a>
 
             <nav>
-                <a href="index.html" class="active">Home</a>
+                <a href="index.html" class="active" aria-current="page">Home</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
@@ -540,10 +561,19 @@
 
         function openModal(panelId) {
             const data = portfolioData[panelId];
-            if(data) {
-                // Optimization: Use DocumentFragment to batch DOM construction and minimize layout thrashing
+            if (data) {
+                // Clear existing content safely
+                while (modalBody.firstChild) {
+                    modalBody.removeChild(modalBody.firstChild);
+                }
+
                 const fragment = document.createDocumentFragment();
 
+                modalBody.textContent = '';
+
+                const fragment = document.createDocumentFragment();
+
+                // Create title
                 const title = document.createElement('h2');
                 title.id = 'modal-title';
                 title.className = 'modal-title-text';
@@ -555,30 +585,50 @@
                 description.textContent = data.description;
                 fragment.appendChild(description);
 
+                // Create gallery
                 const gallery = document.createElement('div');
                 gallery.className = 'modal-gallery';
 
-                // Tiered loading strategy for modal images
                 data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
                     img.src = imgSrc;
-                    img.alt = `${data.title} Example`;
-                    img.decoding = 'async'; // Non-blocking image decoding
+                    img.alt = `${data.title} Example ${index + 1}`;
 
-                    // Prioritize first 4 images to improve initial modal appearance
+                    // Tiered loading strategy
                     if (index < 4) {
-                        img.fetchPriority = 'high';
+                        img.setAttribute('fetchpriority', 'high');
                     } else {
-                        img.loading = 'lazy'; // Lazy load the rest
+                        img.loading = 'lazy';
                     }
 
+                    img.alt = `${data.title} Example`;
+                    img.loading = 'lazy';
                     gallery.appendChild(img);
                 });
 
                 fragment.appendChild(gallery);
 
-                // Safe and efficient update: Clear and append fragment
-                modalBody.textContent = '';
+                // Add keyboard navigation hint
+                const hint = document.createElement('div');
+                hint.className = 'modal-nav-hint';
+
+                const hintText1 = document.createTextNode('Tip: Use ');
+                hint.appendChild(hintText1);
+
+                const kbdLeft = document.createElement('kbd');
+                kbdLeft.textContent = '←';
+                hint.appendChild(kbdLeft);
+
+                hint.appendChild(document.createTextNode(' '));
+
+                const kbdRight = document.createElement('kbd');
+                kbdRight.textContent = '→';
+                hint.appendChild(kbdRight);
+
+                hint.appendChild(document.createTextNode(' keys to switch categories'));
+
+                fragment.appendChild(hint);
+
                 modalBody.appendChild(fragment);
 
                 if (!modal.classList.contains('show')) {
