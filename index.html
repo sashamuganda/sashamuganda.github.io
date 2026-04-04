@@ -410,7 +410,7 @@
 
         <main class="grid-panel">
             <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
-                <img src="images/logos/brand identity.png" alt="Brand Identity" loading="lazy">
+                <img src="images/logos/brand identity.png" alt="Brand Identity" fetchpriority="high" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                     <h2 class="panel-title">Brand Identity</h2>
@@ -419,7 +419,7 @@
             </div>
 
             <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
-                <img src="images/logos/print and documents.png" alt="Print & Documents" loading="lazy">
+                <img src="images/logos/print and documents.png" alt="Print & Documents" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                     <h2 class="panel-title">Print & Documents</h2>
@@ -428,7 +428,7 @@
             </div>
 
             <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
-                <img src="images/logos/social and digital.png" alt="Social & Digital" loading="lazy">
+                <img src="images/logos/social and digital.png" alt="Social & Digital" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                     <h2 class="panel-title">Social & Digital</h2>
@@ -437,7 +437,7 @@
             </div>
 
             <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
-                <img src="images/logos/motion and web.png" alt="Motion & Web" loading="lazy">
+                <img src="images/logos/motion and web.png" alt="Motion & Web" decoding="async">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                     <h2 class="panel-title">Motion & Web</h2>
@@ -478,7 +478,7 @@
                     "images/logos/get home sweatshirt.png",
                     "images/logos/movie logo.png",
                     "images/logos/fashion designer business card (1).png",
-                    "images/logos/thank you for your order.png",
+                    "images/thank you for your order.png",
                     "images/logos/hi im everything.png",
                     "images/logos/astronaut hoodie.png"                    
                 ]
@@ -580,7 +580,6 @@
                 title.textContent = data.title;
                 fragment.appendChild(title);
 
-                // Create description
                 const description = document.createElement('p');
                 description.className = 'modal-desc-text';
                 description.textContent = data.description;
