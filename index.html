@@ -76,7 +76,6 @@
             text-decoration: none;
             color: var(--text-light);
             font-size: 1rem;
-            transition: color 0.3s ease;
         }
         nav a:hover, nav a.active {
             color: var(--text-main);
@@ -104,7 +103,6 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: opacity 0.3s;
         }
         .social-links a:hover {
             opacity: 0.5;
@@ -124,14 +122,21 @@
         }
 
         .view {
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            inset: 0;
             height: 100%;
             width: 100%;
             overflow-y: auto;
+            pointer-events: none;
         }
 
         .view.active {
-            display: block;
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 5;
         }
 
         /* ------------------ ABOUT & CONTACT VIEW STYLES ------------------ */
@@ -211,7 +216,6 @@
             font-family: inherit;
             font-size: 1rem;
             background-color: #fff;
-            transition: border-color 0.3s;
         }
 
         .form-group input:focus,
@@ -230,7 +234,6 @@
             font-weight: 500;
             cursor: pointer;
             width: fit-content;
-            transition: background-color 0.3s;
         }
 
         .btn-send:hover {
@@ -261,8 +264,6 @@
             overflow: hidden;
             border-radius: 6px;
             cursor: pointer;
-            background-size: cover;
-            background-position: center;
         }
 
         /* UPDATED: Image filtering to darken and slightly desaturate the vectors */
@@ -271,13 +272,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease, filter 0.5s ease, opacity 0.3s ease;
             filter: brightness(0.5) saturate(0.8); 
-            opacity: 0;
-        }
-
-        .panel img.loaded {
-            opacity: 1;
         }
 
         /* UPDATED: Brighten slightly and scale up on hover */
@@ -301,7 +296,6 @@
             flex-direction: column;
             justify-content: flex-end;
             padding: 20px 22px;
-            transition: background 0.4s ease;
         }
 
         /* UPDATED: Overlay darkens further on hover to push text to the front */
@@ -341,7 +335,6 @@
             width: fit-content;
             opacity: 0;
             transform: translateY(6px);
-            transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
             pointer-events: none;
         }
 
@@ -394,7 +387,6 @@
             cursor: pointer;
             z-index: 10;
             line-height: 1;
-            transition: color 0.3s ease;
         }
 
         .close-btn:hover {
@@ -439,13 +431,7 @@
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.3s ease;
             cursor: pointer;
-            background-color: #eee;
-        }
-
-        .modal-gallery img.loading {
-            filter: blur(10px);
         }
 
         .modal-gallery img:hover {
@@ -520,8 +506,8 @@
 
     <div class="container">
         <aside class="sidebar">
-            <a href="index.html" class="brand">
-                <img src="images/optimized/Sasha zoomed in.webp" alt="">
+            <a href="#home" class="brand">
+                <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda Profile Image">
                 <h1>Sasha Muganda</h1>
             </a>
 
@@ -550,40 +536,95 @@
             </footer>
         </aside>
 
-        <main class="grid-panel">
-            <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
-                <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
-                    <h2 class="panel-title">Brand Identity</h2>
-                    <span class="btn-explore">Explore</span>
+        <main>
+            <div id="home-view" class="view active">
+                <div class="grid-panel">
+                    <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
+                        <img src="images/logos/brand identity.png" alt="Brand Identity" fetchpriority="high" decoding="async">
+                        <div class="panel-overlay">
+                            <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
+                            <h2 class="panel-title">Brand Identity</h2>
+                            <span class="btn-explore">Explore</span>
+                        </div>
+                    </div>
+
+                    <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
+                        <img src="images/logos/print and documents.png" alt="Print & Documents" decoding="async">
+                        <div class="panel-overlay">
+                            <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
+                            <h2 class="panel-title">Print & Documents</h2>
+                            <span class="btn-explore">Explore</span>
+                        </div>
+                    </div>
+
+                    <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
+                        <img src="images/logos/social and digital.png" alt="Social & Digital" decoding="async">
+                        <div class="panel-overlay">
+                            <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
+                            <h2 class="panel-title">Social & Digital</h2>
+                            <span class="btn-explore">Explore</span>
+                        </div>
+                    </div>
+
+                    <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
+                        <img src="images/logos/motion and web.png" alt="Motion & Web" decoding="async">
+                        <div class="panel-overlay">
+                            <p class="panel-category">Landscape Video · Mobile Video · Website</p>
+                            <h2 class="panel-title">Motion & Web</h2>
+                            <span class="btn-explore">Explore</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
-                <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
-                    <h2 class="panel-title">Print & Documents</h2>
-                    <span class="btn-explore">Explore</span>
+            <div id="about-view" class="view">
+                <div class="content-view">
+                    <h2>About Me</h2>
+                    <div class="about-grid">
+                        <div class="about-image">
+                            <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                        </div>
+                        <div class="about-text">
+                            <section>
+                                <h3>My Story</h3>
+                                <p>I'm a passionate visual designer dedicated to transforming complex ideas into compelling visual narratives. My journey began with a curiosity for how art and technology intersect, leading me to specialize in brand identity and digital design.</p>
+                                <p>Over the years, I've honed my skills in creating everything from minimalist logos to high-impact social media assets, always keeping the user's experience at the forefront of my work.</p>
+                            </section>
+
+                            <section>
+                                <h3>Design Philosophy</h3>
+                                <p>I believe that good design is intentional, functional, and emotive. My approach is to strip away the noise and focus on the core message, using bold typography and clean layouts to create designs that aren't just beautiful, but also effective.</p>
+                            </section>
+
+                            <section>
+                                <h3>Experience</h3>
+                                <p>From collaborating with local startups to working on large-scale digital campaigns, I've had the privilege of bringing many unique visions to life. My expertise spans Brand Identity, Print Media, Social Content, and UI/UX design.</p>
+                            </section>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
-                <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
-                    <h2 class="panel-title">Social & Digital</h2>
-                    <span class="btn-explore">Explore</span>
-                </div>
-            </div>
+            <div id="contact-view" class="view">
+                <div class="content-view">
+                    <h2>Contact Me</h2>
+                    <p style="margin-bottom: 30px; color: var(--text-light);">Have a project in mind? Let's work together.</p>
 
-            <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
-                <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Landscape Video · Mobile Video · Website</p>
-                    <h2 class="panel-title">Motion & Web</h2>
-                    <span class="btn-explore">Explore</span>
+                    <div id="success-msg" class="success-message">
+                        Message Sent! Thank you for reaching out.
+                    </div>
+
+                    <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/richard.sasha116@gmail.com" method="POST">
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" placeholder="Your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-send">Send Message</button>
+                    </form>
                 </div>
             </div>
         </main>
@@ -603,26 +644,26 @@
                 title: "Brand Identity",
                 description: "A strong brand is more than just a logo; it's a cohesive visual system. Here's a look at how concepts evolve into polished merchandise, business cards, and vectors.",
                 images: [
-                    "images/optimized/logos/bed and breakfast logo (2).webp",
-                    "images/optimized/logos/1.webp",
-                    "images/optimized/logos/fragile sticker.webp",
-                    "images/optimized/logos/be heard t-shirt mockup.webp",
-                    "images/optimized/logos/sunday loving club hoodie mockup.webp",
-                    "images/optimized/logos/bed and breakfast logo.webp",
-                    "images/optimized/logos/business card 2-2.webp",
-                    "images/optimized/logos/indian food sticker.webp",
-                    "images/optimized/logos/white t-shirt.webp",
-                    "images/optimized/logos/sweatshirt.webp",
-                    "images/optimized/logos/e-commerce logo (2).webp",
-                    "images/optimized/logos/fashion designer business card.webp",
-                    "images/optimized/logos/thank you for your purchase sticker.webp",
-                    "images/optimized/logos/white t-shirt 2.webp",
-                    "images/optimized/logos/get home sweatshirt.webp",
-                    "images/optimized/logos/movie logo.webp",
-                    "images/optimized/logos/fashion designer business card (1).webp",
-                    "images/optimized/thank you for your order.webp",
-                    "images/optimized/logos/hi im everything.webp",
-                    "images/optimized/logos/astronaut hoodie.webp"
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/1.png",
+                    "images/logos/fragile sticker.png",
+                    "images/logos/be heard t-shirt mockup.png",
+                    "images/logos/sunday loving club hoodie mockup.png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/business card 2-2.png",
+                    "images/logos/indian food sticker.png",
+                    "images/logos/white t-shirt.png",
+                    "images/logos/sweatshirt.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/fashion designer business card.png",
+                    "images/logos/thank you for your purchase sticker.png",
+                    "images/logos/white t-shirt 2.png",
+                    "images/logos/get home sweatshirt.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/fashion designer business card (1).png",
+                    "images/thank you for your order.png",
+                    "images/logos/hi im everything.png",
+                    "images/logos/astronaut hoodie.png"
                 ]
             },
             print: {
@@ -630,66 +671,66 @@
                 description: "Tangible design that demands attention. From clean, readable presentations to eye-catching flyers and banners.",
                 images: 
                 [
-                    "images/optimized/logos/bed and breakfast logo (2).webp",
-                    "images/optimized/logos/bed and breakfast logo.webp",
-                    "images/optimized/logos/catering logo.webp",
-                    "images/optimized/logos/consultancy logo.webp",
-                    "images/optimized/logos/e-commerce logo (2).webp",
-                    "images/optimized/logos/e-commerce logo.webp",
-                    "images/optimized/logos/generic fashion store logo 2.webp",
-                    "images/optimized/logos/generic fashion store.webp",
-                    "images/optimized/logos/lawfirm logo.webp",
-                    "images/optimized/logos/movie logo.webp",
-                    "images/optimized/logos/tech logo 2.webp",
-                    "images/optimized/logos/tech logo 3.webp",
-                    "images/optimized/logos/tech logo.webp",
-                    "images/optimized/logos/thrift store logo (2).webp",
-                    "images/optimized/logos/thrift store logo (3).webp",
-                    "images/optimized/logos/thrift store logo (4).webp",
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
                 ]
             },
             social: {
                 title: "Social & Digital",
                 description: "Vibrant, pixel-perfect content designed to stop the scroll. Tailored specifically for the nuances of Instagram, LinkedIn, and YouTube.",
                 images: [
-                    "images/optimized/logos/bed and breakfast logo (2).webp",
-                    "images/optimized/logos/bed and breakfast logo.webp",
-                    "images/optimized/logos/catering logo.webp",
-                    "images/optimized/logos/consultancy logo.webp",
-                    "images/optimized/logos/e-commerce logo (2).webp",
-                    "images/optimized/logos/e-commerce logo.webp",
-                    "images/optimized/logos/generic fashion store logo 2.webp",
-                    "images/optimized/logos/generic fashion store.webp",
-                    "images/optimized/logos/lawfirm logo.webp",
-                    "images/optimized/logos/movie logo.webp",
-                    "images/optimized/logos/tech logo 2.webp",
-                    "images/optimized/logos/tech logo 3.webp",
-                    "images/optimized/logos/tech logo.webp",
-                    "images/optimized/logos/thrift store logo (2).webp",
-                    "images/optimized/logos/thrift store logo (3).webp",
-                    "images/optimized/logos/thrift store logo (4).webp",
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
                 ]
             },
             motion: {
                 title: "Motion & Web",
                 description: "Bringing static ideas to life through dynamic movement and clean, user-friendly web layouts.",
                 images: [
-                    "images/optimized/logos/bed and breakfast logo (2).webp",
-                    "images/optimized/logos/bed and breakfast logo.webp",
-                    "images/optimized/logos/catering logo.webp",
-                    "images/optimized/logos/consultancy logo.webp",
-                    "images/optimized/logos/e-commerce logo (2).webp",
-                    "images/optimized/logos/e-commerce logo.webp",
-                    "images/optimized/logos/generic fashion store logo 2.webp",
-                    "images/optimized/logos/generic fashion store.webp",
-                    "images/optimized/logos/lawfirm logo.webp",
-                    "images/optimized/logos/movie logo.webp",
-                    "images/optimized/logos/tech logo 2.webp",
-                    "images/optimized/logos/tech logo 3.webp",
-                    "images/optimized/logos/tech logo.webp",
-                    "images/optimized/logos/thrift store logo (2).webp",
-                    "images/optimized/logos/thrift store logo (3).webp",
-                    "images/optimized/logos/thrift store logo (4).webp",
+                    "images/logos/bed and breakfast logo (2).png",
+                    "images/logos/bed and breakfast logo.png",
+                    "images/logos/catering logo.png",
+                    "images/logos/consultancy logo.png",
+                    "images/logos/e-commerce logo (2).png",
+                    "images/logos/e-commerce logo.png",
+                    "images/logos/generic fashion store logo 2.png",
+                    "images/logos/generic fashion store.png",
+                    "images/logos/lawfirm logo.png",
+                    "images/logos/movie logo.png",
+                    "images/logos/tech logo 2.png",
+                    "images/logos/tech logo 3.png",
+                    "images/logos/tech logo.png",
+                    "images/logos/thrift store logo (2).png",
+                    "images/logos/thrift store logo (3).png",
+                    "images/logos/thrift store logo (4).png",
                 ]
             }
         };
@@ -701,23 +742,26 @@
         };
         const navLinks = document.querySelectorAll('#main-nav a');
         const brandLink = document.querySelector('.brand');
-        brandLink.setAttribute('href', '#home');
 
         function handleRoute() {
             const hash = window.location.hash.replace('#', '') || 'home';
 
-            // Update views
+            let viewFound = false;
             Object.keys(views).forEach(viewId => {
                 if (views[viewId]) {
                     if (viewId === hash) {
                         views[viewId].classList.add('active');
+                        viewFound = true;
                     } else {
                         views[viewId].classList.remove('active');
                     }
                 }
             });
 
-            // Update nav links
+            if (!viewFound && views.home) {
+                views.home.classList.add('active');
+            }
+
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === `#${hash}` || (hash === 'home' && href === '#home')) {
@@ -729,8 +773,7 @@
                 }
             });
 
-            // Close modal when navigating
-            if (typeof closeModal === 'function') {
+            if (modal && modal.classList.contains('show')) {
                 closeModal();
             }
         }
@@ -745,9 +788,9 @@
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-
                 const formData = new FormData(contactForm);
-                const data = Object.fromEntries(formData.entries());
+                const data = {};
+                formData.forEach((value, key) => { data[key] = value; });
 
                 fetch(contactForm.action, {
                     method: 'POST',
@@ -757,14 +800,16 @@
                     },
                     body: JSON.stringify(data)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Form submission failed');
+                    return response.json();
+                })
                 .then(result => {
                     contactForm.style.display = 'none';
                     successMsg.style.display = 'block';
                 })
                 .catch(error => {
-                    alert('There was an error sending your message. Please try again or email directly.');
-                    console.error('Error:', error);
+                    alert('Error sending message. Please try again or email directly.');
                 });
             });
         }
@@ -779,10 +824,12 @@
         function openModal(panelId) {
             const data = portfolioData[panelId];
             if (data) {
-                // Clear existing content safely
-                modalBody.textContent = '';
+                while (modalBody.firstChild) {
+                    modalBody.removeChild(modalBody.firstChild);
+                }
 
-                // Create title
+                const fragment = document.createDocumentFragment();
+
                 const title = document.createElement('h2');
                 title.id = 'modal-title';
                 title.className = 'modal-title-text';
@@ -794,38 +841,20 @@
                 description.textContent = data.description;
                 fragment.appendChild(description);
 
-                // Create gallery
                 const gallery = document.createElement('div');
                 gallery.className = 'modal-gallery';
 
                 data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
-                    const thumbSrc = imgSrc.replace('.webp', '_thumb.webp');
-                    const placeSrc = imgSrc.replace('.webp', '_place.webp');
+                    img.src = imgSrc;
+                    img.alt = `${data.title} Project Item ${index + 1}`;
 
-                    // Show placeholder first
-                    img.src = placeSrc;
-                    img.classList.add('loading');
-                    img.alt = `${data.title} Example ${index + 1}`;
-
-                    // Load thumbnail over placeholder
-                    const highRes = new Image();
-                    highRes.src = thumbSrc;
-                    highRes.onload = () => {
-                        img.src = thumbSrc;
-                        img.classList.remove('loading');
-                    };
-
-                    // When clicked, open the full size image in a new tab (simple lightbox behavior)
-                    img.onclick = () => window.open(imgSrc, '_blank');
-
-                    // Tiered loading strategy
                     if (index < 4) {
                         img.setAttribute('fetchpriority', 'high');
                     } else {
                         img.loading = 'lazy';
                     }
-
+                    img.decoding = 'async';
                     gallery.appendChild(img);
                 });
 
