@@ -456,10 +456,16 @@
             filter: blur(10px);
         }
 
-        .modal-gallery img:hover {
+        .modal-gallery img:hover,
+        .modal-gallery img:focus-visible {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 2;
+        }
+
+        .modal-gallery img:focus-visible {
+            outline: 3px solid var(--accent-blue);
+            outline-offset: 3px;
         }
 
         .modal-nav-hint {
@@ -869,7 +875,16 @@
                     };
 
                     // When clicked, open the full size image in a new tab (simple lightbox behavior)
-                    img.onclick = () => window.open(imgSrc, '_blank');
+                    const openImage = () => window.open(imgSrc, '_blank', 'noopener,noreferrer');
+                    img.onclick = openImage;
+                    img.onkeydown = (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openImage();
+                        }
+                    };
+                    img.tabIndex = 0;
+                    img.role = 'button';
 
                     // Tiered loading strategy
                     if (index < 4) {
@@ -945,7 +960,23 @@
         window.addEventListener('keydown', (e) => {
             if (!modal.classList.contains('show')) return;
 
-            if (e.key === 'Escape') {
+            if (e.key === 'Tab') {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            } else if (e.key === 'Escape') {
                 closeModal();
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                 const keys = Object.keys(portfolioData);
