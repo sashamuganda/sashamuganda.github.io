@@ -5,3 +5,7 @@
 ## 2026-04-04 - [Critical Path & Modal Rendering Optimization]
 **Learning:** Applying `loading="lazy"` to above-the-fold content is a performance anti-pattern that delays Largest Contentful Paint (LCP). Critical assets should instead use `fetchpriority="high"` and `decoding="async"`. Furthermore, when dynamically populating large galleries in modals, using `DocumentFragment` to batch DOM construction significantly reduces layout thrashing compared to multiple `appendChild` calls or `innerHTML` overwrites.
 **Action:** Audit "above-the-fold" assets for incorrect lazy loading and prefer `DocumentFragment` for non-trivial DOM injections.
+
+## 2026-04-05 - [JS Preloading vs Native Lazy Loading]
+**Learning:** Using `new Image()` in JavaScript to "manually" handle lazy loading (e.g., loading a high-res version over a placeholder) can inadvertently bypass the browser's native `loading="lazy"` optimization. Since the JS execution happens immediately upon element creation, the browser initiates the fetch regardless of viewport proximity.
+**Action:** Prefer native `loading="lazy"` by setting `img.src` directly and using CSS `background-image` for low-res placeholders to maintain "blur-up" effects without triggering premature downloads.
