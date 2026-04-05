@@ -131,6 +131,8 @@
             overflow: hidden;
             border-radius: 6px;
             cursor: pointer;
+            background-size: cover;
+            background-position: center;
         }
 
         /* UPDATED: Image filtering to darken and slightly desaturate the vectors */
@@ -139,8 +141,13 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease, filter 0.5s ease;
+            transition: transform 0.5s ease, filter 0.5s ease, opacity 0.3s ease;
             filter: brightness(0.5) saturate(0.8); 
+            opacity: 0;
+        }
+
+        .panel img.loaded {
+            opacity: 1;
         }
 
         /* UPDATED: Brighten slightly and scale up on hover */
@@ -302,8 +309,13 @@
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.3s ease;
             cursor: pointer;
+            background-color: #eee;
+        }
+
+        .modal-gallery img.loading {
+            filter: blur(10px);
         }
 
         .modal-gallery img:hover {
@@ -379,7 +391,7 @@
     <div class="container">
         <aside class="sidebar">
             <a href="index.html" class="brand">
-                <img src="Sasha zoomed in.jpeg" alt="">
+                <img src="images/optimized/Sasha zoomed in.webp" alt="">
                 <h1>Sasha Muganda</h1>
             </a>
 
@@ -409,8 +421,8 @@
         </aside>
 
         <main class="grid-panel">
-            <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio">
-                <img src="images/logos/brand identity.png" alt="Brand Identity" fetchpriority="high" decoding="async">
+            <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
+                <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
                 <div class="panel-overlay">
                     <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                     <h2 class="panel-title">Brand Identity</h2>
@@ -418,8 +430,8 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio">
-                <img src="images/logos/print and documents.png" alt="Print & Documents" decoding="async">
+            <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
+                <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
                 <div class="panel-overlay">
                     <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                     <h2 class="panel-title">Print & Documents</h2>
@@ -427,8 +439,8 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio">
-                <img src="images/logos/social and digital.png" alt="Social & Digital" decoding="async">
+            <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
+                <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
                 <div class="panel-overlay">
                     <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                     <h2 class="panel-title">Social & Digital</h2>
@@ -436,8 +448,8 @@
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio">
-                <img src="images/logos/motion and web.png" alt="Motion & Web" decoding="async">
+            <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
+                <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
                 <div class="panel-overlay">
                     <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                     <h2 class="panel-title">Motion & Web</h2>
@@ -461,26 +473,26 @@
                 title: "Brand Identity",
                 description: "A strong brand is more than just a logo; it's a cohesive visual system. Here's a look at how concepts evolve into polished merchandise, business cards, and vectors.",
                 images: [
-                    "images/logos/bed and breakfast logo (2).png",
-                    "images/logos/1.png",
-                    "images/logos/fragile sticker.png",
-                    "images/logos/be heard t-shirt mockup.png",
-                    "images/logos/sunday loving club hoodie mockup.png",
-                    "images/logos/bed and breakfast logo.png",
-                    "images/logos/business card 2-2.png",
-                    "images/logos/indian food sticker.png",
-                    "images/logos/white t-shirt.png",
-                    "images/logos/sweatshirt.png",
-                    "images/logos/e-commerce logo (2).png",
-                    "images/logos/fashion designer business card.png",
-                    "images/logos/thank you for your purchase sticker.png",
-                    "images/logos/white t-shirt 2.png",
-                    "images/logos/get home sweatshirt.png",
-                    "images/logos/movie logo.png",
-                    "images/logos/fashion designer business card (1).png",
-                    "images/thank you for your order.png",
-                    "images/logos/hi im everything.png",
-                    "images/logos/astronaut hoodie.png"                    
+                    "images/optimized/logos/bed and breakfast logo (2).webp",
+                    "images/optimized/logos/1.webp",
+                    "images/optimized/logos/fragile sticker.webp",
+                    "images/optimized/logos/be heard t-shirt mockup.webp",
+                    "images/optimized/logos/sunday loving club hoodie mockup.webp",
+                    "images/optimized/logos/bed and breakfast logo.webp",
+                    "images/optimized/logos/business card 2-2.webp",
+                    "images/optimized/logos/indian food sticker.webp",
+                    "images/optimized/logos/white t-shirt.webp",
+                    "images/optimized/logos/sweatshirt.webp",
+                    "images/optimized/logos/e-commerce logo (2).webp",
+                    "images/optimized/logos/fashion designer business card.webp",
+                    "images/optimized/logos/thank you for your purchase sticker.webp",
+                    "images/optimized/logos/white t-shirt 2.webp",
+                    "images/optimized/logos/get home sweatshirt.webp",
+                    "images/optimized/logos/movie logo.webp",
+                    "images/optimized/logos/fashion designer business card (1).webp",
+                    "images/optimized/thank you for your order.webp",
+                    "images/optimized/logos/hi im everything.webp",
+                    "images/optimized/logos/astronaut hoodie.webp"
                 ]
             },
             print: {
@@ -488,66 +500,66 @@
                 description: "Tangible design that demands attention. From clean, readable presentations to eye-catching flyers and banners.",
                 images: 
                 [
-                    "images/logos/bed and breakfast logo (2).png",
-                    "images/logos/bed and breakfast logo.png",
-                    "images/logos/catering logo.png",
-                    "images/logos/consultancy logo.png",
-                    "images/logos/e-commerce logo (2).png",
-                    "images/logos/e-commerce logo.png",
-                    "images/logos/generic fashion store logo 2.png",
-                    "images/logos/generic fashion store.png",
-                    "images/logos/lawfirm logo.png",
-                    "images/logos/movie logo.png",
-                    "images/logos/tech logo 2.png",
-                    "images/logos/tech logo 3.png",
-                    "images/logos/tech logo.png",
-                    "images/logos/thrift store logo (2).png",
-                    "images/logos/thrift store logo (3).png",
-                    "images/logos/thrift store logo (4).png",
+                    "images/optimized/logos/bed and breakfast logo (2).webp",
+                    "images/optimized/logos/bed and breakfast logo.webp",
+                    "images/optimized/logos/catering logo.webp",
+                    "images/optimized/logos/consultancy logo.webp",
+                    "images/optimized/logos/e-commerce logo (2).webp",
+                    "images/optimized/logos/e-commerce logo.webp",
+                    "images/optimized/logos/generic fashion store logo 2.webp",
+                    "images/optimized/logos/generic fashion store.webp",
+                    "images/optimized/logos/lawfirm logo.webp",
+                    "images/optimized/logos/movie logo.webp",
+                    "images/optimized/logos/tech logo 2.webp",
+                    "images/optimized/logos/tech logo 3.webp",
+                    "images/optimized/logos/tech logo.webp",
+                    "images/optimized/logos/thrift store logo (2).webp",
+                    "images/optimized/logos/thrift store logo (3).webp",
+                    "images/optimized/logos/thrift store logo (4).webp",
                 ]
             },
             social: {
                 title: "Social & Digital",
                 description: "Vibrant, pixel-perfect content designed to stop the scroll. Tailored specifically for the nuances of Instagram, LinkedIn, and YouTube.",
                 images: [
-                    "images/logos/bed and breakfast logo (2).png",
-                    "images/logos/bed and breakfast logo.png",
-                    "images/logos/catering logo.png",
-                    "images/logos/consultancy logo.png",
-                    "images/logos/e-commerce logo (2).png",
-                    "images/logos/e-commerce logo.png",
-                    "images/logos/generic fashion store logo 2.png",
-                    "images/logos/generic fashion store.png",
-                    "images/logos/lawfirm logo.png",
-                    "images/logos/movie logo.png",
-                    "images/logos/tech logo 2.png",
-                    "images/logos/tech logo 3.png",
-                    "images/logos/tech logo.png",
-                    "images/logos/thrift store logo (2).png",
-                    "images/logos/thrift store logo (3).png",
-                    "images/logos/thrift store logo (4).png",
+                    "images/optimized/logos/bed and breakfast logo (2).webp",
+                    "images/optimized/logos/bed and breakfast logo.webp",
+                    "images/optimized/logos/catering logo.webp",
+                    "images/optimized/logos/consultancy logo.webp",
+                    "images/optimized/logos/e-commerce logo (2).webp",
+                    "images/optimized/logos/e-commerce logo.webp",
+                    "images/optimized/logos/generic fashion store logo 2.webp",
+                    "images/optimized/logos/generic fashion store.webp",
+                    "images/optimized/logos/lawfirm logo.webp",
+                    "images/optimized/logos/movie logo.webp",
+                    "images/optimized/logos/tech logo 2.webp",
+                    "images/optimized/logos/tech logo 3.webp",
+                    "images/optimized/logos/tech logo.webp",
+                    "images/optimized/logos/thrift store logo (2).webp",
+                    "images/optimized/logos/thrift store logo (3).webp",
+                    "images/optimized/logos/thrift store logo (4).webp",
                 ]
             },
             motion: {
                 title: "Motion & Web",
                 description: "Bringing static ideas to life through dynamic movement and clean, user-friendly web layouts.",
                 images: [
-                    "images/logos/bed and breakfast logo (2).png",
-                    "images/logos/bed and breakfast logo.png",
-                    "images/logos/catering logo.png",
-                    "images/logos/consultancy logo.png",
-                    "images/logos/e-commerce logo (2).png",
-                    "images/logos/e-commerce logo.png",
-                    "images/logos/generic fashion store logo 2.png",
-                    "images/logos/generic fashion store.png",
-                    "images/logos/lawfirm logo.png",
-                    "images/logos/movie logo.png",
-                    "images/logos/tech logo 2.png",
-                    "images/logos/tech logo 3.png",
-                    "images/logos/tech logo.png",
-                    "images/logos/thrift store logo (2).png",
-                    "images/logos/thrift store logo (3).png",
-                    "images/logos/thrift store logo (4).png",
+                    "images/optimized/logos/bed and breakfast logo (2).webp",
+                    "images/optimized/logos/bed and breakfast logo.webp",
+                    "images/optimized/logos/catering logo.webp",
+                    "images/optimized/logos/consultancy logo.webp",
+                    "images/optimized/logos/e-commerce logo (2).webp",
+                    "images/optimized/logos/e-commerce logo.webp",
+                    "images/optimized/logos/generic fashion store logo 2.webp",
+                    "images/optimized/logos/generic fashion store.webp",
+                    "images/optimized/logos/lawfirm logo.webp",
+                    "images/optimized/logos/movie logo.webp",
+                    "images/optimized/logos/tech logo 2.webp",
+                    "images/optimized/logos/tech logo 3.webp",
+                    "images/optimized/logos/tech logo.webp",
+                    "images/optimized/logos/thrift store logo (2).webp",
+                    "images/optimized/logos/thrift store logo (3).webp",
+                    "images/optimized/logos/thrift store logo (4).webp",
                 ]
             }
         };
@@ -563,12 +575,6 @@
             const data = portfolioData[panelId];
             if (data) {
                 // Clear existing content safely
-                while (modalBody.firstChild) {
-                    modalBody.removeChild(modalBody.firstChild);
-                }
-
-                const fragment = document.createDocumentFragment();
-
                 modalBody.textContent = '';
 
                 const fragment = document.createDocumentFragment();
@@ -591,8 +597,24 @@
 
                 data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
-                    img.src = imgSrc;
+                    const thumbSrc = imgSrc.replace('.webp', '_thumb.webp');
+                    const placeSrc = imgSrc.replace('.webp', '_place.webp');
+
+                    // Show placeholder first
+                    img.src = placeSrc;
+                    img.classList.add('loading');
                     img.alt = `${data.title} Example ${index + 1}`;
+
+                    // Load thumbnail over placeholder
+                    const highRes = new Image();
+                    highRes.src = thumbSrc;
+                    highRes.onload = () => {
+                        img.src = thumbSrc;
+                        img.classList.remove('loading');
+                    };
+
+                    // When clicked, open the full size image in a new tab (simple lightbox behavior)
+                    img.onclick = () => window.open(imgSrc, '_blank');
 
                     // Tiered loading strategy
                     if (index < 4) {
@@ -601,8 +623,6 @@
                         img.loading = 'lazy';
                     }
 
-                    img.alt = `${data.title} Example`;
-                    img.loading = 'lazy';
                     gallery.appendChild(img);
                 });
 
