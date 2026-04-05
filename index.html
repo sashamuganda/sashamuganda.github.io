@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formsubmit.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
     <title>Sasha Muganda | Designer</title>
     <style>
         :root {
@@ -22,7 +22,7 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; 
+            overflow: hidden;
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-stack);
@@ -116,9 +116,139 @@
             border-radius: 2px;
         }
 
+        /* ------------------ MAIN CONTENT AREA ------------------ */
+        main {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+
+        .view {
+            display: none;
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* ------------------ ABOUT & CONTACT VIEW STYLES ------------------ */
+        .content-view {
+            padding: 20px 40px 40px 0;
+            max-width: 800px;
+        }
+
+        .content-view h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            filter: grayscale(0.2);
+        }
+
+        .about-text h3 {
+            font-size: 1.2rem;
+            margin: 24px 0 12px;
+            color: var(--text-main);
+        }
+
+        .about-text p {
+            margin-bottom: 16px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .content-view {
+                padding: 20px 0;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .content-view h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ------------------ CONTACT FORM STYLES ------------------ */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .btn-send {
+            padding: 12px 24px;
+            background-color: var(--accent-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: fit-content;
+            transition: background-color 0.3s;
+        }
+
+        .btn-send:hover {
+            background-color: #1a4194;
+        }
+
+        .success-message {
+            display: none;
+            padding: 20px;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
         /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
         .grid-panel {
-            flex: 1;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
@@ -395,10 +525,10 @@
                 <h1>Sasha Muganda</h1>
             </a>
 
-            <nav>
-                <a href="index.html" class="active" aria-current="page">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+            <nav id="main-nav">
+                <a href="#home" class="active" aria-current="page">Home</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
             </nav>
 
             <div class="intro-text">
@@ -564,6 +694,81 @@
             }
         };
 
+        const views = {
+            home: document.getElementById('home-view'),
+            about: document.getElementById('about-view'),
+            contact: document.getElementById('contact-view')
+        };
+        const navLinks = document.querySelectorAll('#main-nav a');
+        const brandLink = document.querySelector('.brand');
+        brandLink.setAttribute('href', '#home');
+
+        function handleRoute() {
+            const hash = window.location.hash.replace('#', '') || 'home';
+
+            // Update views
+            Object.keys(views).forEach(viewId => {
+                if (views[viewId]) {
+                    if (viewId === hash) {
+                        views[viewId].classList.add('active');
+                    } else {
+                        views[viewId].classList.remove('active');
+                    }
+                }
+            });
+
+            // Update nav links
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${hash}` || (hash === 'home' && href === '#home')) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            // Close modal when navigating
+            if (typeof closeModal === 'function') {
+                closeModal();
+            }
+        }
+
+        window.addEventListener('hashchange', handleRoute);
+        window.addEventListener('load', handleRoute);
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contact-form');
+        const successMsg = document.getElementById('success-msg');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData.entries());
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    contactForm.style.display = 'none';
+                    successMsg.style.display = 'block';
+                })
+                .catch(error => {
+                    alert('There was an error sending your message. Please try again or email directly.');
+                    console.error('Error:', error);
+                });
+            });
+        }
+
         const modal = document.getElementById('portfolioModal');
         const closeBtn = document.querySelector('.close-btn');
         const modalBody = document.getElementById('modal-body');
@@ -576,8 +781,6 @@
             if (data) {
                 // Clear existing content safely
                 modalBody.textContent = '';
-
-                const fragment = document.createDocumentFragment();
 
                 // Create title
                 const title = document.createElement('h2');
