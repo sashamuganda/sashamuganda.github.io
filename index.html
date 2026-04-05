@@ -134,6 +134,10 @@
             display: block;
         }
 
+        .view.active.grid-panel {
+            display: grid;
+        }
+
         /* ------------------ ABOUT & CONTACT VIEW STYLES ------------------ */
         .content-view {
             padding: 20px 40px 40px 0;
@@ -249,7 +253,6 @@
 
         /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
         .grid-panel {
-            display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             gap: 12px;
@@ -555,40 +558,84 @@
             </footer>
         </aside>
 
-        <main class="grid-panel">
-            <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
-                <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
-                    <h2 class="panel-title">Brand Identity</h2>
-                    <span class="btn-explore">Explore</span>
+        <main>
+            <div id="home-view" class="view active grid-panel">
+                <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
+                    <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
+                    <div class="panel-overlay">
+                        <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
+                        <h2 class="panel-title">Brand Identity</h2>
+                        <span class="btn-explore">Explore</span>
+                    </div>
+                </div>
+
+                <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
+                    <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
+                    <div class="panel-overlay">
+                        <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
+                        <h2 class="panel-title">Print & Documents</h2>
+                        <span class="btn-explore">Explore</span>
+                    </div>
+                </div>
+
+                <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
+                    <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
+                    <div class="panel-overlay">
+                        <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
+                        <h2 class="panel-title">Social & Digital</h2>
+                        <span class="btn-explore">Explore</span>
+                    </div>
+                </div>
+
+                <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
+                    <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
+                    <div class="panel-overlay">
+                        <p class="panel-category">Landscape Video · Mobile Video · Website</p>
+                        <h2 class="panel-title">Motion & Web</h2>
+                        <span class="btn-explore">Explore</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
-                <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
-                    <h2 class="panel-title">Print & Documents</h2>
-                    <span class="btn-explore">Explore</span>
+            <div id="about-view" class="view">
+                <div class="content-view">
+                    <h2>About</h2>
+                    <div class="about-grid">
+                        <div class="about-image">
+                            <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                        </div>
+                        <div class="about-text">
+                            <p>Sasha Muganda is a visionary designer specializing in brand identity, digital experiences, and visual storytelling. With a focus on creating unforgettable identities, Sasha blends technical precision with creative intuition.</p>
+                            <h3>Expertise</h3>
+                            <p>From logo design to complete brand ecosystems, I provide creative solutions that help brands stand out in a crowded digital landscape.</p>
+                            <h3>Vision</h3>
+                            <p>My work is driven by the belief that design should not only be beautiful but also functional and meaningful, bridging the gap between concepts and reality.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
-                <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
-                    <h2 class="panel-title">Social & Digital</h2>
-                    <span class="btn-explore">Explore</span>
-                </div>
-            </div>
-
-            <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
-                <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
-                <div class="panel-overlay">
-                    <p class="panel-category">Landscape Video · Mobile Video · Website</p>
-                    <h2 class="panel-title">Motion & Web</h2>
-                    <span class="btn-explore">Explore</span>
+            <div id="contact-view" class="view">
+                <div class="content-view">
+                    <h2>Get in Touch</h2>
+                    <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/richard.sasha116@gmail.com" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Your Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-send">Send Message</button>
+                    </form>
+                    <div id="success-msg" class="success-message">
+                        Message sent! I'll get back to you as soon as possible.
+                    </div>
                 </div>
             </div>
         </main>
@@ -769,7 +816,6 @@
                 })
                 .catch(error => {
                     alert('There was an error sending your message. Please try again or email directly.');
-                    console.error('Error:', error);
                 });
             });
         }
@@ -786,6 +832,7 @@
             if (data) {
                 // Clear existing content safely
                 modalBody.textContent = '';
+                const fragment = document.createDocumentFragment();
 
                 // Create title
                 const title = document.createElement('h2');
