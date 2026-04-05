@@ -198,7 +198,12 @@
             opacity: 0;
             transform: translateY(6px);
             transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s ease;
-            pointer-events: none;
+            cursor: pointer;
+        }
+
+        .btn-explore:hover {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
         }
 
         .panel:hover .btn-explore {
