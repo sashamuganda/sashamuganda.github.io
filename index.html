@@ -608,7 +608,7 @@
                     <h2>About</h2>
                     <div class="about-grid">
                         <div class="about-image">
-                            <img src="Sasha zoomed in.jpeg" alt="Sasha Muganda">
+                            <img src="images/optimized/Sasha zoomed in.webp" alt="Sasha Muganda" decoding="async">
                         </div>
                         <div class="about-text">
                             <p>Sasha Muganda is a visionary designer specializing in brand identity, digital experiences, and visual storytelling. With a focus on creating unforgettable identities, Sasha blends technical precision with creative intuition.</p>
@@ -861,18 +861,20 @@
                     const thumbSrc = imgSrc.replace('.webp', '_thumb.webp');
                     const placeSrc = imgSrc.replace('.webp', '_place.webp');
 
-                    // Show placeholder first
-                    img.src = placeSrc;
+                    // BOLT: Performance Optimization - Native Lazy Loading & Blur-up
+                    // Use CSS background for placeholder to keep blur-up while respecting native lazy loading
+                    img.style.backgroundImage = `url('${placeSrc}')`;
+                    img.style.backgroundSize = 'cover';
                     img.classList.add('loading');
-                    img.alt = `${data.title} Example ${index + 1}`;
 
-                    // Load thumbnail over placeholder
-                    const highRes = new Image();
-                    highRes.src = thumbSrc;
-                    highRes.onload = () => {
-                        img.src = thumbSrc;
+                    // BOLT: Assign onload before src to avoid race conditions (especially for cached images)
+                    img.onload = () => {
                         img.classList.remove('loading');
                     };
+
+                    // Native source handles lazy loading correctly (unlike JS-preloaded highRes)
+                    img.src = thumbSrc;
+                    img.alt = `${data.title} Example ${index + 1}`;
 
                     // When clicked, open the full size image in a new tab (simple lightbox behavior)
                     const openImage = () => window.open(imgSrc, '_blank', 'noopener,noreferrer');
@@ -886,7 +888,7 @@
                     img.tabIndex = 0;
                     img.role = 'button';
 
-                    // Tiered loading strategy
+                    // BOLT: Tiered loading strategy for LCP and initial render efficiency
                     if (index < 4) {
                         img.setAttribute('fetchpriority', 'high');
                     } else {
