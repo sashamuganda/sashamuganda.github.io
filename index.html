@@ -529,13 +529,19 @@
             .panel { height: 220px; }
         }
     </style>
+    <noscript>
+        <style>
+            #home-view { display: grid !important; }
+            .view.active { display: none; } /* Hide other views if JS is off */
+        </style>
+    </noscript>
 </head>
 <body>
 
     <div class="container">
         <aside class="sidebar">
             <a href="index.html" class="brand">
-                <img src="images/optimized/Sasha zoomed in.webp" alt="">
+                <img src="images/optimized/Sasha zoomed in_thumb.webp" width="42" height="42" alt="">
                 <h1>Sasha Muganda</h1>
             </a>
 
@@ -565,9 +571,13 @@
         </aside>
 
         <main>
-            <div id="home-view" class="view active grid-panel">
+            <div id="home-view" class="view grid-panel">
                 <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
-                    <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/brand identity.webp"
+                         srcset="images/optimized/logos/brand identity_thumb.webp 400w, images/optimized/logos/brand identity.webp 1264w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         width="1264" height="842"
+                         alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                         <h2 class="panel-title">Brand Identity</h2>
@@ -576,7 +586,11 @@
                 </div>
 
                 <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
-                    <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/print and documents.webp"
+                         srcset="images/optimized/logos/print and documents_thumb.webp 400w, images/optimized/logos/print and documents.webp 1214w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         width="1214" height="880"
+                         alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                         <h2 class="panel-title">Print & Documents</h2>
@@ -585,7 +599,11 @@
                 </div>
 
                 <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
-                    <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/social and digital.webp"
+                         srcset="images/optimized/logos/social and digital_thumb.webp 400w, images/optimized/logos/social and digital.webp 1238w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         width="1238" height="848"
+                         alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                         <h2 class="panel-title">Social & Digital</h2>
@@ -594,7 +612,11 @@
                 </div>
 
                 <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
-                    <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/motion and web.webp"
+                         srcset="images/optimized/logos/motion and web_thumb.webp 400w, images/optimized/logos/motion and web.webp 1293w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         width="1293" height="816"
+                         alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                         <h2 class="panel-title">Motion & Web</h2>
@@ -608,7 +630,7 @@
                     <h2>About</h2>
                     <div class="about-grid">
                         <div class="about-image">
-                            <img src="images/optimized/Sasha zoomed in.webp" alt="Sasha Muganda" decoding="async">
+                            <img src="images/optimized/Sasha zoomed in.webp" loading="lazy" width="317" height="317" alt="Sasha Muganda" decoding="async">
                         </div>
                         <div class="about-text">
                             <p>Sasha Muganda is a visionary designer specializing in brand identity, digital experiences, and visual storytelling. With a focus on creating unforgettable identities, Sasha blends technical precision with creative intuition.</p>
@@ -793,8 +815,10 @@
             }
         }
 
+        // BOLT: Execute immediately and on DOMContentLoaded for faster SPA navigation and no flash of incorrect content
+        handleRoute();
         window.addEventListener('hashchange', handleRoute);
-        window.addEventListener('load', handleRoute);
+        window.addEventListener('DOMContentLoaded', handleRoute);
 
         // Contact Form Handling
         const contactForm = document.getElementById('contact-form');
