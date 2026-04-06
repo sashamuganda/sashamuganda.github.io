@@ -9,3 +9,7 @@
 ## 2026-04-05 - [Comprehensive Modal Accessibility and Focus Management]
 **Learning:** Dynamic gallery content and modal focus management are critical for an accessible SPA experience. Interactive elements generated via JavaScript (like gallery images) must be explicitly assigned `tabIndex="0"` and `role="button"` with `keydown` listeners. Furthermore, a robust focus trap is necessary to contain keyboard navigation within the modal, preventing "focus leaks" to the background.
 **Action:** Always implement a focus trap for modals and ensure all dynamically created interactive elements are keyboard-accessible and visually highlighted via `:focus-visible`.
+
+## 2026-04-06 - [Integrated Form Feedback and Focus Discovery]
+**Learning:** Micro-UX improvements for static forms significantly reduce user anxiety. Providing immediate "Sending..." feedback on submission prevents duplicate actions, while restoring the button on error ensures the app remains usable. Additionally, when using "hover-to-reveal" patterns for CTAs (like "Explore" buttons), using `:focus-visible` or `:focus-within` on the parent ensures keyboard users can discover and interact with the same elements as mouse users.
+**Action:** Ensure CTAs are revealed for keyboard users and implement robust state handling for async form submissions to provide clear progress and error recovery.

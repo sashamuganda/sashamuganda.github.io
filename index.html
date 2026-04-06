@@ -207,6 +207,11 @@
             color: var(--text-main);
         }
 
+        .required-star {
+            color: #d32f2f;
+            margin-left: 4px;
+        }
+
         .form-group input,
         .form-group textarea {
             padding: 12px;
@@ -239,6 +244,17 @@
 
         .btn-send:hover {
             background-color: #1a4194;
+        }
+
+        .btn-send:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .btn-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: var(--text-light);
         }
 
         .success-message {
@@ -353,7 +369,8 @@
             border-color: var(--accent-blue);
         }
 
-        .panel:hover .btn-explore {
+        .panel:hover .btn-explore,
+        .panel:focus-visible .btn-explore {
             opacity: 1;
             transform: translateY(0);
         }
@@ -626,15 +643,15 @@
                     <h2>Get in Touch</h2>
                     <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/2a6124fb90d992b567fa0bd62f5acfc2" method="POST">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Name<span class="required-star" aria-hidden="true">*</span></label>
                             <input type="text" id="name" name="name" required placeholder="Your Name" maxlength="100">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email<span class="required-star" aria-hidden="true">*</span></label>
                             <input type="email" id="email" name="email" required placeholder="Your Email" maxlength="100">
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
+                            <label for="message">Message<span class="required-star" aria-hidden="true">*</span></label>
                             <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project..." maxlength="2000"></textarea>
                         </div>
                         <button type="submit" class="btn-send">Send Message</button>
@@ -803,6 +820,12 @@
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                const submitBtn = contactForm.querySelector('.btn-send');
+                const originalBtnText = submitBtn.textContent;
+
+                // Palette: Loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
 
                 const formData = new FormData(contactForm);
                 const data = Object.fromEntries(formData.entries());
@@ -821,6 +844,9 @@
                     successMsg.style.display = 'block';
                 })
                 .catch(error => {
+                    // Palette: Recoverable state
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
                     alert('There was an error sending your message. Please try again or email directly.');
                 });
             });
