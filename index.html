@@ -11,6 +11,8 @@
             --text-main: #333333;
             --text-light: #777777;
             --accent-blue: #2352b5;
+            --error-bg: #fff1f0;
+            --error-text: #d32f2f;
             --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -241,6 +243,16 @@
             background-color: #1a4194;
         }
 
+        .btn-send:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .btn-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .success-message {
             display: none;
             padding: 20px;
@@ -249,6 +261,21 @@
             border-radius: 4px;
             margin-bottom: 20px;
             font-weight: 500;
+        }
+
+        .error-message {
+            display: none;
+            padding: 20px;
+            background-color: var(--error-bg);
+            color: var(--error-text);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .required-star {
+            color: var(--error-text);
+            margin-left: 2px;
         }
 
         /* ------------------ RIGHT: 4-PANEL GRID ------------------ */
@@ -626,21 +653,24 @@
                     <h2>Get in Touch</h2>
                     <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/2a6124fb90d992b567fa0bd62f5acfc2" method="POST">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Name <span class="required-star" aria-hidden="true">*</span></label>
                             <input type="text" id="name" name="name" required placeholder="Your Name" maxlength="100">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email <span class="required-star" aria-hidden="true">*</span></label>
                             <input type="email" id="email" name="email" required placeholder="Your Email" maxlength="100">
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
+                            <label for="message">Message <span class="required-star" aria-hidden="true">*</span></label>
                             <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project..." maxlength="2000"></textarea>
                         </div>
                         <button type="submit" class="btn-send">Send Message</button>
                     </form>
-                    <div id="success-msg" class="success-message">
+                    <div id="success-msg" class="success-message" role="status" aria-live="polite" tabindex="-1">
                         Message sent! I'll get back to you as soon as possible.
+                    </div>
+                    <div id="error-msg" class="error-message" role="alert" aria-live="assertive" tabindex="-1">
+                        There was an error sending your message. Please try again or email directly.
                     </div>
                 </div>
             </div>
@@ -799,10 +829,16 @@
         // Contact Form Handling
         const contactForm = document.getElementById('contact-form');
         const successMsg = document.getElementById('success-msg');
+        const errorMsg = document.getElementById('error-msg');
 
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                const submitBtn = contactForm.querySelector('.btn-send');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                errorMsg.style.display = 'none';
 
                 const formData = new FormData(contactForm);
                 const data = Object.fromEntries(formData.entries());
@@ -815,13 +851,20 @@
                     },
                     body: JSON.stringify(data)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Form submission failed');
+                    return response.json();
+                })
                 .then(result => {
                     contactForm.style.display = 'none';
                     successMsg.style.display = 'block';
+                    successMsg.focus();
                 })
                 .catch(error => {
-                    alert('There was an error sending your message. Please try again or email directly.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                    errorMsg.style.display = 'block';
+                    errorMsg.focus();
                 });
             });
         }
