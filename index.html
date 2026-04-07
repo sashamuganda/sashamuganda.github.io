@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formsubmit.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://formsubmit.co; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests;">
     <title>Sasha Muganda | Designer</title>
     <style>
         :root {
@@ -625,6 +625,7 @@
                 <div class="content-view">
                     <h2>Get in Touch</h2>
                     <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/2a6124fb90d992b567fa0bd62f5acfc2" method="POST">
+                        <input type="text" name="_honey" style="display:none !important" tabindex="-1" autocomplete="off">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required placeholder="Your Name" maxlength="100">
@@ -806,6 +807,11 @@
 
                 const formData = new FormData(contactForm);
                 const data = Object.fromEntries(formData.entries());
+
+                // Honeypot check for bots
+                if (data._honey) {
+                    return;
+                }
 
                 fetch(contactForm.action, {
                     method: 'POST',
