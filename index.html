@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formsubmit.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co;">
     <title>Sasha Muganda | Designer</title>
+    <noscript>
+        <style>
+            #home-view { display: grid !important; }
+        </style>
+    </noscript>
     <style>
         :root {
             --bg-color: #fafafa;
@@ -534,7 +539,7 @@
 
     <div class="container">
         <aside class="sidebar">
-            <a href="index.html" class="brand">
+            <a href="#home" class="brand">
                 <img src="images/optimized/Sasha zoomed in.webp" alt="">
                 <h1>Sasha Muganda</h1>
             </a>
@@ -565,9 +570,12 @@
         </aside>
 
         <main>
-            <div id="home-view" class="view active grid-panel">
+            <div id="home-view" class="view grid-panel">
                 <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
-                    <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/brand identity_thumb.webp"
+                         srcset="images/optimized/logos/brand identity_thumb.webp 400w, images/optimized/logos/brand identity.webp 800w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Logo · Business Card · Stickers · T-shirt · Hoodie</p>
                         <h2 class="panel-title">Brand Identity</h2>
@@ -576,7 +584,10 @@
                 </div>
 
                 <div class="panel" data-panel-id="print" role="button" tabindex="0" aria-label="View Print & Documents portfolio" style="background-image: url('images/optimized/logos/print and documents_place.webp')">
-                    <img src="images/optimized/logos/print and documents.webp" alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/print and documents_thumb.webp"
+                         srcset="images/optimized/logos/print and documents_thumb.webp 400w, images/optimized/logos/print and documents.webp 800w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         alt="Print & Documents" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Flyer · Banner · Presentation · Document · Whiteboard</p>
                         <h2 class="panel-title">Print & Documents</h2>
@@ -585,7 +596,10 @@
                 </div>
 
                 <div class="panel" data-panel-id="social" role="button" tabindex="0" aria-label="View Social & Digital portfolio" style="background-image: url('images/optimized/logos/social and digital_place.webp')">
-                    <img src="images/optimized/logos/social and digital.webp" alt="Social & Digital" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/social and digital_thumb.webp"
+                         srcset="images/optimized/logos/social and digital_thumb.webp 400w, images/optimized/logos/social and digital.webp 800w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         alt="Social & Digital" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Instagram · Facebook · LinkedIn · YouTube</p>
                         <h2 class="panel-title">Social & Digital</h2>
@@ -594,7 +608,10 @@
                 </div>
 
                 <div class="panel" data-panel-id="motion" role="button" tabindex="0" aria-label="View Motion & Web portfolio" style="background-image: url('images/optimized/logos/motion and web_place.webp')">
-                    <img src="images/optimized/logos/motion and web.webp" alt="Motion & Web" decoding="async" onload="this.classList.add('loaded')">
+                    <img src="images/optimized/logos/motion and web_thumb.webp"
+                         srcset="images/optimized/logos/motion and web_thumb.webp 400w, images/optimized/logos/motion and web.webp 800w"
+                         sizes="(max-width: 900px) 100vw, 50vw"
+                         alt="Motion & Web" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
                     <div class="panel-overlay">
                         <p class="panel-category">Landscape Video · Mobile Video · Website</p>
                         <h2 class="panel-title">Motion & Web</h2>
@@ -608,7 +625,7 @@
                     <h2>About</h2>
                     <div class="about-grid">
                         <div class="about-image">
-                            <img src="images/optimized/Sasha zoomed in.webp" alt="Sasha Muganda" decoding="async">
+                            <img src="images/optimized/Sasha zoomed in.webp" alt="Sasha Muganda" loading="lazy" decoding="async">
                         </div>
                         <div class="about-text">
                             <p>Sasha Muganda is a visionary designer specializing in brand identity, digital experiences, and visual storytelling. With a focus on creating unforgettable identities, Sasha blends technical precision with creative intuition.</p>
@@ -759,7 +776,6 @@
         };
         const navLinks = document.querySelectorAll('#main-nav a');
         const brandLink = document.querySelector('.brand');
-        brandLink.setAttribute('href', '#home');
 
         function handleRoute() {
             const hash = window.location.hash.replace('#', '') || 'home';
@@ -794,7 +810,7 @@
         }
 
         window.addEventListener('hashchange', handleRoute);
-        window.addEventListener('load', handleRoute);
+        handleRoute();
 
         // Contact Form Handling
         const contactForm = document.getElementById('contact-form');
