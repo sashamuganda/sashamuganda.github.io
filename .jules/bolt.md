@@ -9,3 +9,7 @@
 ## 2026-04-05 - [JS Preloading vs Native Lazy Loading]
 **Learning:** Using `new Image()` in JavaScript to "manually" handle lazy loading (e.g., loading a high-res version over a placeholder) can inadvertently bypass the browser's native `loading="lazy"` optimization. Since the JS execution happens immediately upon element creation, the browser initiates the fetch regardless of viewport proximity.
 **Action:** Prefer native `loading="lazy"` by setting `img.src` directly and using CSS `background-image` for low-res placeholders to maintain "blur-up" effects without triggering premature downloads.
+
+## 2026-04-06 - [Eliminating SPA "Home Flash"]
+**Learning:** For hash-based SPAs using CSS visibility for views, executing the routing handler immediately (or on `DOMContentLoaded`) instead of `window.load` is critical to prevent the "Home Flash" (briefly seeing all views or the wrong view). This reduces visual TTI and improves perceived performance.
+**Action:** Always trigger routing logic as early as possible in the lifecycle, and ensure initial view states are handled via progressive enhancement (e.g., `<noscript>`).
