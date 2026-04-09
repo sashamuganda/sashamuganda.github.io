@@ -9,3 +9,7 @@
 ## 2026-04-05 - [JS Preloading vs Native Lazy Loading]
 **Learning:** Using `new Image()` in JavaScript to "manually" handle lazy loading (e.g., loading a high-res version over a placeholder) can inadvertently bypass the browser's native `loading="lazy"` optimization. Since the JS execution happens immediately upon element creation, the browser initiates the fetch regardless of viewport proximity.
 **Action:** Prefer native `loading="lazy"` by setting `img.src` directly and using CSS `background-image` for low-res placeholders to maintain "blur-up" effects without triggering premature downloads.
+
+## 2026-04-09 - [Leveraging Pre-optimized Asset Variants]
+**Learning:** The build pipeline (optimize_images.py) generates 400px thumbnails (_thumb.webp), but these were not being utilized for initial page load or sidebar assets, leading to a ~76% larger initial payload than necessary.
+**Action:** Always check images/optimized/ for existing thumbnail variants before assuming only the full-resolution asset is available, and implement srcset/sizes to automatically select the most efficient variant.
