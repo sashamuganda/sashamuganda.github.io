@@ -226,6 +226,28 @@
             border-color: var(--accent-blue);
         }
 
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            z-index: 2000;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            transition: top 0.3s ease;
+        }
+
+        .skip-link:focus {
+            top: 0;
+            outline: 2px solid #fff;
+            outline-offset: -4px;
+        }
+
         .btn-send {
             padding: 12px 24px;
             background-color: var(--accent-blue);
@@ -548,6 +570,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <div class="container">
         <aside class="sidebar">
@@ -581,7 +604,7 @@
             </footer>
         </aside>
 
-        <main>
+        <main id="main-content" tabindex="-1">
             <div id="home-view" class="view active grid-panel">
                 <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
                     <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
@@ -782,7 +805,10 @@
         brandLink.setAttribute('href', '#home');
 
         function handleRoute() {
-            const hash = window.location.hash.replace('#', '') || 'home';
+            const rawHash = window.location.hash.replace('#', '');
+            if (rawHash === 'main-content') return;
+
+            const hash = rawHash || 'home';
 
             // Update views
             Object.keys(views).forEach(viewId => {
