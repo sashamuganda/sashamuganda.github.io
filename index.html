@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formsubmit.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://formsubmit.co; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Sasha Muganda | Designer</title>
     <style>
         :root {
@@ -840,6 +841,17 @@
                     return;
                 }
 
+                // SENTINEL: Additional JS validation to ensure required fields aren't just whitespace
+                if (!formData.get('name')?.trim() || !formData.get('message')?.trim()) {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Message';
+                    }
+                    errorMsg.textContent = 'Please fill out all required fields.';
+                    errorMsg.style.display = 'block';
+                    return;
+                }
+
                 const data = Object.fromEntries(formData.entries());
 
                 fetch(contactForm.action, {
@@ -903,8 +915,9 @@
 
                 data.images.forEach((imgSrc, index) => {
                     const img = document.createElement('img');
-                    const thumbSrc = imgSrc.replace('.webp', '_thumb.webp');
-                    const placeSrc = imgSrc.replace('.webp', '_place.webp');
+                    const thumbSrc = encodeURI(imgSrc.replace('.webp', '_thumb.webp'));
+                    const placeSrc = encodeURI(imgSrc.replace('.webp', '_place.webp'));
+                    const safeImgSrc = encodeURI(imgSrc);
 
                     // BOLT: Performance Optimization - Native Lazy Loading & Blur-up
                     // Use CSS background for placeholder to keep blur-up while respecting native lazy loading
@@ -922,7 +935,8 @@
                     img.alt = `${data.title} Example ${index + 1}`;
 
                     // When clicked, open the full size image in a new tab (simple lightbox behavior)
-                    const openImage = () => window.open(imgSrc, '_blank', 'noopener,noreferrer');
+                    // SENTINEL: Use sanitized URI for window.open to prevent URI-based injection/errors
+                    const openImage = () => window.open(safeImgSrc, '_blank', 'noopener,noreferrer');
                     img.onclick = openImage;
                     img.onkeydown = (e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
