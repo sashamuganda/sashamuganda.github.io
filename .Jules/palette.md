@@ -9,3 +9,7 @@
 ## 2026-04-05 - [Comprehensive Modal Accessibility and Focus Management]
 **Learning:** Dynamic gallery content and modal focus management are critical for an accessible SPA experience. Interactive elements generated via JavaScript (like gallery images) must be explicitly assigned `tabIndex="0"` and `role="button"` with `keydown` listeners. Furthermore, a robust focus trap is necessary to contain keyboard navigation within the modal, preventing "focus leaks" to the background.
 **Action:** Always implement a focus trap for modals and ensure all dynamically created interactive elements are keyboard-accessible and visually highlighted via `:focus-visible`.
+
+## 2024-05-20 - [Routing Conflict with Accessibility Anchors]
+**Learning:** In hash-based Single Page Applications (SPAs), traditional accessibility features like "Skip to main content" links can inadvertently trigger the router and cause unwanted view transitions if they use standard `#target` anchors.
+**Action:** Always update the SPA's routing logic (e.g., `handleRoute`) to return early or ignore hashes that are intended for on-page focus management rather than navigation.
