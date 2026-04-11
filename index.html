@@ -545,9 +545,27 @@
             }
             .panel { height: 220px; }
         }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-blue);
+            color: white;
+            padding: 8px;
+            z-index: 2000;
+            transition: top 0.3s;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link" id="skip-to-content">Skip to content</a>
 
     <div class="container">
         <aside class="sidebar">
@@ -581,7 +599,7 @@
             </footer>
         </aside>
 
-        <main>
+        <main id="main-content" tabindex="-1">
             <div id="home-view" class="view active grid-panel">
                 <div class="panel" data-panel-id="brand" role="button" tabindex="0" aria-label="View Brand Identity portfolio" style="background-image: url('images/optimized/logos/brand identity_place.webp')">
                     <img src="images/optimized/logos/brand identity.webp" alt="Brand Identity" fetchpriority="high" decoding="async" onload="this.classList.add('loaded')">
@@ -815,6 +833,15 @@
 
         window.addEventListener('hashchange', handleRoute);
         window.addEventListener('load', handleRoute);
+
+        // Skip to content handling
+        document.getElementById('skip-to-content').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.getElementById('main-content');
+            if (target) {
+                target.focus();
+            }
+        });
 
         // Contact Form Handling
         const contactForm = document.getElementById('contact-form');

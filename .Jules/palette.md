@@ -9,3 +9,7 @@
 ## 2026-04-05 - [Comprehensive Modal Accessibility and Focus Management]
 **Learning:** Dynamic gallery content and modal focus management are critical for an accessible SPA experience. Interactive elements generated via JavaScript (like gallery images) must be explicitly assigned `tabIndex="0"` and `role="button"` with `keydown` listeners. Furthermore, a robust focus trap is necessary to contain keyboard navigation within the modal, preventing "focus leaks" to the background.
 **Action:** Always implement a focus trap for modals and ensure all dynamically created interactive elements are keyboard-accessible and visually highlighted via `:focus-visible`.
+
+## 2026-05-20 - [Robust Skip Links in Hash-based SPAs]
+**Learning:** Standard anchor-based skip links (`<a href="#main">`) can trigger hash-change listeners in SPAs, potentially causing the router to default to a home view or break if the hash isn't a recognized route.
+**Action:** Implement skip links using JavaScript event listeners that use `e.preventDefault()` and `element.focus()` to shift focus manually, preserving the application's routing state while maintaining accessibility.
