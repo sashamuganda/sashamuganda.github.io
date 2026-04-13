@@ -9,3 +9,7 @@
 ## 2026-04-05 - [JS Preloading vs Native Lazy Loading]
 **Learning:** Using `new Image()` in JavaScript to "manually" handle lazy loading (e.g., loading a high-res version over a placeholder) can inadvertently bypass the browser's native `loading="lazy"` optimization. Since the JS execution happens immediately upon element creation, the browser initiates the fetch regardless of viewport proximity.
 **Action:** Prefer native `loading="lazy"` by setting `img.src` directly and using CSS `background-image` for low-res placeholders to maintain "blur-up" effects without triggering premature downloads.
+
+## 2025-05-14 - Responsive Images and Layout Stability
+**Learning:** For hash-based SPAs with dynamic galleries, native `srcset` and `sizes` are the most efficient way to reduce mobile payload, but filenames with spaces must be explicitly encoded (e.g., `%20`) in both HTML and JS (`encodeURI`) to ensure robust cross-browser resolution.
+**Action:** Always use `encodeURI()` when constructing asset paths dynamically and include `width`/`height` on all `<img>` tags to eliminate CLS.
