@@ -16,3 +16,8 @@
 **Vulnerability:** External links using `target="_blank"` were missing `rel="noopener noreferrer"`.
 **Learning:** This is a classic security risk where a newly opened page in a different domain can control the original window via `window.opener`.
 **Prevention:** Always include `rel="noopener noreferrer"` when using `target="_blank"` for external links to ensure cross-origin isolation.
+
+## 2026-04-09 - [Security Hardening & URI Robustness]
+**Vulnerability:** Weak CSP allowed unnecessary sources like `data:` and lacked a Referrer Policy, potentially leaking internal data to external services (like form submission endpoints). Additionally, filenames with spaces/parentheses were injected into the DOM without sanitization.
+**Learning:** Static sites often have overly permissive CSPs by default. URI-based injection or resolution errors can occur when dynamic filenames contain special characters if not explicitly encoded.
+**Prevention:** Implement strict CSP/Referrer policies and always use `encodeURI()` when constructing asset paths from dynamic data.
